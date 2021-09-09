@@ -1,4 +1,5 @@
 body {
+  background-color: darkslategrey;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -11,3 +12,57 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* div {
+  outline: 1px solid red;
+} */
+
+/* .card {
+  box-sizing: 150px;
+  height: 150px;
+} */
+
+/* .handSlot{
+  margin-bottom: 100px;
+} */
+
+/* .hand{
+  margin-bottom: 500px;
+  margin-right: 150px;
+} */
+
+/* .bid{
+  margin-top:150px;
+} */
+
+.currentBid{
+  color: red;
+  text-transform: capitalize;
+}
+
+.hand {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 13fr);
+  grid-template-rows: 19fr;
+  gap: .5fr;
+  cursor: pointer;
+  justify-content: center;
+  padding-top: .25fr;
+  padding-bottom: .25fr;
+}
+
+.discardHand {
+  margin: 0;
+  display: grid;
+  align-self: center;
+  grid-template-columns: repeat(5, 13fr);
+  grid-template-rows: 1.5fr 2fr 0rem;
+  gap: .5rem;
+  cursor: pointer;
+  justify-content: center;
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+}
+
+input[type=checkbox] {width:30px; height:30px;}

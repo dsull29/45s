@@ -1,0 +1,131 @@
+{
+    "cards": [
+        {
+            "name": "5H",
+            "suit": "H",
+            "value": "5",
+            "trump": -35,
+            "nonTrump": 8
+        },
+        {
+            "name": "JH",
+            "suit": "H",
+            "value": "J",
+            "trump": -20,
+            "nonTrump": 2
+        },
+        {
+            "name": "KH",
+            "suit": "H",
+            "value": "K",
+            "trump": -10,
+            "nonTrump": 0
+        },
+        {
+            "name": "QH",
+            "suit": "H",
+            "value": "Q",
+            "trump": -9,
+            "nonTrump": 1
+        },
+        {
+            "name": "10H",
+            "suit": "H",
+            "value": "10",
+            "trump": -8,
+            "nonTrump": 3
+        },
+        {
+            "name": "9H",
+            "suit": "H",
+            "value": "9",
+            "trump": -7,
+            "nonTrump": 4
+        },
+        {
+            "name": "8H",
+            "suit": "H",
+            "value": "8",
+            "trump": -6,
+            "nonTrump": 5
+        },
+        {
+            "name": "7H",
+            "suit": "H",
+            "value": "7",
+            "trump": -5,
+            "nonTrump": 6
+        },
+        {
+            "name": "6H",
+            "suit": "H",
+            "value": "6",
+            "trump": -4,
+            "nonTrump": 9
+        },
+        {
+            "name": "4H",
+            "suit": "H",
+            "value": "4",
+            "trump": -3,
+            "nonTrump": 9
+        },
+        {
+            "name": "3H",
+            "suit": "H",
+            "value": "3",
+            "trump": -2,
+            "nonTrump": 11
+        },
+        {
+            "name": "2H",
+            "suit": "H",
+            "value": "2",
+            "trump": -1,
+            "nonTrump": 10
+        },
+        {
+            "name": "5D",
+            "suit": "D",
+            "value": "5",
+            "trump": -35,
+            "nonTrump": 8
+        },
+        {
+            "name": "JD",
+            "suit": "D",
+            "value": "J",
+            "trump": -20,
+            "nonTrump": 2
+        },
+        {
+            "name": "AD",
+            "suit": "D",
+            "value": "A",
+            "trump": -12,
+            "nonTrump": 12
+        },
+        {
+            "name": "KD",
+            "suit": "D",
+            "value": "K",
+            "trump": -10,
+            "nonTrump": 0
+        },
+        {
+            "name": "QD",
+            "suit": "D",
+            "value": "Q",
+            "trump": -9,
+            "nonTrump": 1
+        },
+        {
+            "name": "10D",
+            "suit": "D",
+            "value": "10",
+            "trump": -8,
+            "nonTrump": 3
+        },
+
+    ]
+}
