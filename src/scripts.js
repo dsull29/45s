@@ -191,4 +191,69 @@ export function getPlayerHand(url, player) {
     return tempData
 }
 
+// TODO compress the FETCHs down to a string of THENs
+export async function getNewCards(deckUrl,discardCodes,player, sendDiscardData) {
+        const discardData = await discard(deckUrl,discardCodes);
+        
+        const redrawCount = 5 - discardData.piles[player].remaining;
+        const redrawData = await redraw(deckUrl, redrawCount);
 
+        let cards = [];
+            if (redrawData.cards) {
+           for (let i = 0; i < redrawData.cards.length; i++)
+             cards.push(redrawData.cards[i].code);
+         }
+
+         const assignData = await assign(deckUrl,player, cards)
+
+         sendDiscardData(true)
+
+};
+
+async function discard(deckUrl,discardCodes) {
+    const response = await fetch(deckUrl + "/pile/discard/add/?cards=" + discardCodes.toString())
+      .then((res) => {
+        if (!res.ok) {
+          throw Error("Could not fetch data for that resource");
+        }
+        return res.json();
+      })
+      .then((data) => {
+         return data;
+        });
+
+    console.log("discRes",response)
+    return response;
+  }
+
+async function redraw(deckUrl,count) {
+     const response = await fetch(deckUrl + "/draw/?count=" + count)
+       .then((res) => {
+         if (!res.ok) {
+           throw Error("Could not fetch data for that resource");
+         }
+         return res.json();
+       })
+       .then((data) => {
+            return data;
+       });
+
+       console.log("redrawRes", response)
+       return response;
+   }
+
+async function assign(deckUrl, player, cards) {
+    const response = await fetch(deckUrl + "/pile/" + player + "/add/?cards=" + cards.toString())
+      .then((res) => {
+        if (!res.ok) {
+          throw Error("Could not fetch data for that resource");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        return data;
+      });
+        
+      console.log("assignRes", response);
+      return response;
+  }

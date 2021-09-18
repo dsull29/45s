@@ -122,7 +122,7 @@ const Round = ({ scoreLog, sendScoreLog }) => {
         setBookInfo("");
     }
 
-    console.log(roundLog)
+    // console.log("roundlog",roundLog)
 
     return (
         <div className="content">
