@@ -1,5 +1,4 @@
 import { useState } from 'react';
-// import useFetch from './useFetch';
 import Score from './Score';
 import Round from './Round';
 
