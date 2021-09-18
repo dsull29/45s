@@ -19,7 +19,7 @@ const PlayerTurn = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("nachos", playerCard, e);
+    // console.log("nachos", playerCard, e);
     playCardNow(deckUrl, cards[playerCard], sendPlayCard);
   };
 
