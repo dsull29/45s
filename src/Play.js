@@ -14,6 +14,8 @@ const Play = ({ deckUrl, player, order, sendBookInfo, book, trumpSuit }) => {
 
   var winner;
 
+  let bookNum = book;
+
   if (turn === 1 && playCard1) {
     // Need to add code that moves the played card to the book pile
     let guac = playCard1.code.charAt(1);
@@ -33,22 +35,14 @@ const Play = ({ deckUrl, player, order, sendBookInfo, book, trumpSuit }) => {
     let curBestValue = 50;
     for (let i = 0; i < book.length; i++) {
       let val = getCardValue(book[i].code, trumpSuit);
-    //   console.log(val, curBestValue, playCard3, playCard4);
       if (val < curBestValue) {
         curBestValue = val;
         winner = i;
       }
     }
     let highCard = book[winner].code;
-    sendBookInfo({
-      winner,
-      highCard,
-    });
-    setTurn(0);
-    setPlayCard1("");
-    setPlayCard2("");
-    setPlayCard3("");
-    setPlayCard4("");
+    let tempLog = { bookNum, winner, highCard };
+    sendBookInfo(tempLog);
   }
 
   return (

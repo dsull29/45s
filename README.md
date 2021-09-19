@@ -1,6 +1,6 @@
 Card gamed named 45s. 
 
-Available at [https://dsull29.github.io/45s/] (https://dsull29.github.io/45s/)
+Available at [https://dsull29.github.io/45s/](https://dsull29.github.io/45s/)
 
 ## Available Scripts
 

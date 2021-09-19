@@ -8,7 +8,7 @@ const Bid = ({ hands, order, dealer, sendBidData }) => {
     const [highBidder, setHighBidder] = useState("");
 
     const player = "player1";
-
+    console.log("dealer:",dealer)
     var isDealer = (player === dealer)
 
     useEffect(() => {

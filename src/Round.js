@@ -7,8 +7,9 @@ import SelectSuit from "./SelectSuit";
 import Discard from "./Discard";
 import BidInfo from "./BidInfo";
 import Play from "./Play";
+import { getCardValue } from "./cardValues";
 
-const Round = ({ scoreLog, sendScoreLog }) => {
+const Round = ({ round, sendRoundScore, newRound }) => {
   const [hands, setHands] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [bidData, setBidData] = useState("");
@@ -17,13 +18,27 @@ const Round = ({ scoreLog, sendScoreLog }) => {
   const [discardData, setDiscardData] = useState("");
   const [bookInfo, setBookInfo] = useState(null);
   const [bookNum, setBookNum] = useState(1);
-  const [roundLog, setRoundLog] = useState([]);
+  const [log, setLog] = useState([]);
+
+  if (newRound && stage === "Over") {
+    setHands(null);
+    setIsPending(true);
+    setBidData("");
+    setStage("Deal");
+    setTrumpSuit("");
+    setDiscardData("");
+    setBookInfo(null);
+    setBookNum(1);
+    setLog([]);
+    console.log("wipe")
+   
+  }
+
   var player = "player1";
 
   const { data, error } = useFetch(
     "https://deckofcardsapi.com/api/deck/new/draw/?count=20"
   );
-
   var deckUrl = null;
 
   if (data) {
@@ -31,7 +46,7 @@ const Round = ({ scoreLog, sendScoreLog }) => {
   }
 
   const order = ["player1", "player2", "player3", "player4"];
-  const dealer = order[scoreLog.roundNum % 4];
+  const dealer = order[(round - 1) % 4];
   const turnOrder = getTurnOrder(bookInfo);
 
   function getTurnOrder(bookInfo) {
@@ -115,19 +130,54 @@ const Round = ({ scoreLog, sendScoreLog }) => {
   }
 
   if (bookInfo) {
-    // console.log("record", bookInfo)
-    // var meow = order[bookInfo.winner]
-    // console.log("mew", meow)
-    let winner = bookInfo.winner;
-    let highCard = bookInfo.highCard;
-    roundLog.push({ bookNum, winner, highCard });
-    setRoundLog(roundLog);
-    setBookNum(bookNum + 1);
+    log[bookNum - 1] = bookInfo;
+    setLog(log);
     setBookInfo("");
+    setBookNum(bookNum + 1);
   }
 
-  // console.log("roundlog",roundLog)
+  if (stage === "Play" && log.length === 5) {
+    setStage("Winner")
+    setBookNum(0);
+  }
 
+  let team1BookCount = 0;
+  let team2BookCount = 0;
+
+  if (stage === "Winner") {
+    let highCard = 50;
+    let highCardWinner = null;
+
+    for (let x = 0; x < 5; x++) {
+      if (log[x].winner === 1 || log[x].winner === 3) {
+        team1BookCount += 1;
+      } else {
+        team2BookCount += 1;
+      }
+      let cardValue = getCardValue(log[x].highCard, trumpSuit);
+      if (highCard > cardValue) {
+        highCard = cardValue;
+        highCardWinner = log[x].winner;
+      }
+    }
+    if (highCardWinner === 1 || highCardWinner === 3) {
+      team1BookCount += 1;
+    } else {
+      team2BookCount += 1;
+    }
+
+    if (team1BookCount === 6) {
+      team1BookCount = 9;
+    }
+
+    if (team2BookCount === 6) {
+      team2BookCount = 9;
+    }
+    console.log("roundWinner:",team1BookCount,team2BookCount)
+//    sendRoundScore([team1BookCount, team2BookCount]);
+    
+}
+ console.log("stageBook",stage,bookNum,round)
   return (
     <div className="content">
       {stage === "Deal" && isPending && <div>Dealing....</div>}
@@ -213,7 +263,7 @@ const Round = ({ scoreLog, sendScoreLog }) => {
       )}
       {stage === "Play" && bookNum === 4 && (
         <div>
-          <BidInfo bidData={bidData} suit={trumpSuit} book={bookNum}/>
+          <BidInfo bidData={bidData} suit={trumpSuit} book={bookNum} />
           <Hand deckUrl={deckUrl} player={player} stage={stage} />
           <Play
             deckUrl={deckUrl}
@@ -238,6 +288,17 @@ const Round = ({ scoreLog, sendScoreLog }) => {
             book={bookNum}
             trumpSuit={trumpSuit}
           />
+        </div>
+      )}
+
+      {stage === "Winner" && (
+        <div>
+          <BidInfo bidData={bidData} suit={trumpSuit} book={bookNum} />
+          <div>Round Over! </div>
+          <div>Team 1: {team1BookCount }</div>
+          <div>Team 2: {team2BookCount }</div>
+            <button onClick={() => { sendRoundScore([team1BookCount, team2BookCount]);
+                                     setStage("Over")}}>Next Round</button>
         </div>
       )}
     </div>
