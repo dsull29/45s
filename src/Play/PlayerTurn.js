@@ -1,6 +1,6 @@
 import { useState } from "react";
-import useFetch from "./useFetch";
-import { playCardNow } from "./scripts";
+import useFetch from "../useFetch";
+import { playCardNow } from "../scripts";
 
 const PlayerTurn = ({
   deckUrl,
@@ -23,6 +23,7 @@ const PlayerTurn = ({
     playCardNow(deckUrl, cards[playerCard], sendPlayCard);
   };
 
+  // console.log(sendPlayCard)
   if (data) {
     cards = data.piles[player].cards;
   }

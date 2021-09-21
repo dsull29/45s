@@ -1,7 +1,7 @@
 import { useState } from "react";
+import { getCardValue } from "../cardValues";
 import PlayCard from "./PlayCard";
 import PlayerTurn from "./PlayerTurn";
-import { getCardValue } from "./cardValues";
 import Turn from "./Turn";
 
 const Play = ({ deckUrl, player, order, sendBookInfo, book, trumpSuit }) => {
@@ -45,14 +45,47 @@ const Play = ({ deckUrl, player, order, sendBookInfo, book, trumpSuit }) => {
     sendBookInfo(tempLog);
   }
 
+  function whoseTurn(val, sendPlayCard) {
+    // want to check whose turn it is to decide which card to render
+    // right now everything is set to work on RoundOrder and there's only one player
+    // need to checkPlayerPosition = Turn and then render the PlayerTurn instead of CpuTurn
+    //
+    // console.log(val,order[val-1])
+    if (checkPlayerPosition(player, order) === val) {
+      return (
+        <PlayerTurn
+          deckUrl={deckUrl}
+          player={player}
+          position={val}
+          sendPlayCard={sendPlayCard}
+          trumpSuit={trumpSuit}
+          leadSuit={leadSuit}
+        />
+      );
+    } else {
+      return (
+        <Turn
+          deckUrl={deckUrl}
+          player={order[val-1]}
+          position={val}
+          sendPlayCard={sendPlayCard}
+          trumpSuit={trumpSuit}
+        />
+      );
+    }
+  }
+
   return (
     <div>
       <div className="handInfo">
         {turn === 5 && <div>Find Winner Now, {winner}</div>}
       </div>
       <div className="hand">
-        <div>
-          {turn > 0 && <div>Napkin</div>}
+      {turn > 0 && !playCard1 && whoseTurn(1, setPlayCard1)}
+      {turn > 1 && !playCard2 && whoseTurn(2, setPlayCard2)}        
+      {turn > 2 && !playCard3 && whoseTurn(3, setPlayCard3)}        
+      {turn > 3 && !playCard4 && whoseTurn(4, setPlayCard4)}                      
+        {/* <div>
           {turn > 0 && !playCard1 && (
             <Turn
               deckUrl={deckUrl}
@@ -92,7 +125,7 @@ const Play = ({ deckUrl, player, order, sendBookInfo, book, trumpSuit }) => {
               leadSuit={leadSuit}
             />
           )}
-        </div>
+        </div> */}
         {playCard1 && <PlayCard card={playCard1} />}
         {playCard2 && <PlayCard card={playCard2} />}
         {playCard3 && <PlayCard card={playCard3} />}
@@ -103,3 +136,12 @@ const Play = ({ deckUrl, player, order, sendBookInfo, book, trumpSuit }) => {
 };
 
 export default Play;
+
+/** finds the human players position
+ * @param  {String} player handle of the player (fixed to "player1" ATM)
+ * @param  {Array} order order of players (currently fixed to roundOrder)
+ */
+export function checkPlayerPosition(player, order) {
+  let num = order.indexOf(player) + 1;
+  return num;
+}

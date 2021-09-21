@@ -1,15 +1,15 @@
-import { useState } from "react";
-import useFetch from "./useFetch";
+import { useEffect, useState } from "react";
+// import useFetch from "./useFetch";
 import Hand from "./Hand";
 import Bid from "./Bid";
-import { dealHand } from "./deckFuncs";
+import { dealHands } from "./deckFuncs";
 import SelectSuit from "./SelectSuit";
 import Discard from "./Discard";
 import BidInfo from "./BidInfo";
-import Play from "./Play";
+import Play from "./Play/Play";
 import { getCardValue } from "./cardValues";
 
-const Round = ({ round, sendRoundScore, newRound }) => {
+const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
   const [hands, setHands] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [bidData, setBidData] = useState("");
@@ -19,7 +19,12 @@ const Round = ({ round, sendRoundScore, newRound }) => {
   const [bookInfo, setBookInfo] = useState(null);
   const [bookNum, setBookNum] = useState(1);
   const [log, setLog] = useState([]);
+  const [turnOrder, setTurnOrder] = useState([]);
+  const [roundOrder, setRoundOrder] = useState(null);
 
+  const order = ["player1", "player2", "player3", "player4"];
+
+  // TODO look into a way to reset states without having todo this...
   if (newRound && stage === "Over") {
     setHands(null);
     setIsPending(true);
@@ -30,94 +35,22 @@ const Round = ({ round, sendRoundScore, newRound }) => {
     setBookInfo(null);
     setBookNum(1);
     setLog([]);
-    console.log("wipe")
-   
+    setRoundOrder(null)
+    console.log("wipe");
   }
 
-  var player = "player1";
-
-  const { data, error } = useFetch(
-    "https://deckofcardsapi.com/api/deck/new/draw/?count=20"
-  );
-  var deckUrl = null;
-
-  if (data) {
-    deckUrl = "https://deckofcardsapi.com/api/deck/" + data.deck_id;
-  }
-
-  const order = ["player1", "player2", "player3", "player4"];
+  const player = "player1";
   const dealer = order[(round - 1) % 4];
-  const turnOrder = getTurnOrder(bookInfo);
+  
+  useEffect(() => {
+    dealHands(deckUrl, round, setIsPending, setHands, setRoundOrder);
+  }, [deckUrl, round]);
 
-  function getTurnOrder(bookInfo) {
-    var val;
-    if (!bookInfo) {
-      val = ["player2", "player3", "player4", "player1"];
-    } else {
-      val = null;
-    }
-    return val;
-  }
-
-  if (data && stage === "Deal") {
-    let handRes = dealHand(data.cards);
-    setHands(handRes);
-    fetch(
-      deckUrl + "/pile/" + order[0] + "/add/?cards=" + handRes[0].toString()
-    )
-      .then((res) => {
-        if (!res.ok) {
-          throw Error("Could not fetch data for that resource");
-        }
-        return res.json();
-      })
-      .then((data) => {
-        return fetch(
-          deckUrl + "/pile/" + order[1] + "/add/?cards=" + handRes[1].toString()
-        );
-      })
-      .then(function (response) {
-        if (response.ok) {
-          return response.json();
-        } else {
-          return Promise.reject(response);
-        }
-      })
-      .then((data) => {
-        return fetch(
-          deckUrl + "/pile/" + order[2] + "/add/?cards=" + handRes[2].toString()
-        );
-      })
-      .then(function (response) {
-        if (response.ok) {
-          return response.json();
-        } else {
-          return Promise.reject(response);
-        }
-      })
-      .then((data) => {
-        return fetch(
-          deckUrl + "/pile/" + order[3] + "/add/?cards=" + handRes[3].toString()
-        );
-      })
-      .then(function (response) {
-        if (response.ok) {
-          setIsPending(false);
-          return response.json();
-        } else {
-          return Promise.reject(response);
-        }
-      })
-      .catch((err) => {
-        if (err.name === "AbortError") {
-          console.log("fetch aborted");
-        } else {
-        }
-      });
+  if (deckUrl && stage === "Deal" && !isPending) {
     setStage("Bid");
   }
 
-  if (bidData && stage === "Bid") {
+  if (bidData && stage === "Bid" && !isPending) {
     setStage("SuitSelect");
   }
 
@@ -137,7 +70,7 @@ const Round = ({ round, sendRoundScore, newRound }) => {
   }
 
   if (stage === "Play" && log.length === 5) {
-    setStage("Winner")
+    setStage("Winner");
     setBookNum(0);
   }
 
@@ -173,20 +106,20 @@ const Round = ({ round, sendRoundScore, newRound }) => {
     if (team2BookCount === 6) {
       team2BookCount = 9;
     }
-    console.log("roundWinner:",team1BookCount,team2BookCount)
-//    sendRoundScore([team1BookCount, team2BookCount]);
-    
-}
- console.log("stageBook",stage,bookNum,round)
+    // console.log("roundWinner:", team1BookCount, team2BookCount);
+    //    sendRoundScore([team1BookCount, team2BookCount]);
+  }
+
   return (
     <div className="content">
       {stage === "Deal" && isPending && <div>Dealing....</div>}
-      {stage === "Bid" && (
+      {/* {console.log("bida", stage, hands)} */}
+      {stage === "Bid" && hands && roundOrder && (
         <div>
           <Hand deckUrl={deckUrl} player={player} stage={stage} />
           <Bid
             hands={hands}
-            order={order}
+            order={roundOrder}
             dealer={dealer}
             sendBidData={setBidData}
           />
@@ -226,7 +159,7 @@ const Round = ({ round, sendRoundScore, newRound }) => {
           <Play
             deckUrl={deckUrl}
             player={player}
-            order={turnOrder}
+            order={roundOrder}
             sendBookInfo={setBookInfo}
             book={bookNum}
             trumpSuit={trumpSuit}
@@ -240,7 +173,7 @@ const Round = ({ round, sendRoundScore, newRound }) => {
           <Play
             deckUrl={deckUrl}
             player={player}
-            order={turnOrder}
+            order={roundOrder}
             sendBookInfo={setBookInfo}
             book={bookNum}
             trumpSuit={trumpSuit}
@@ -254,7 +187,7 @@ const Round = ({ round, sendRoundScore, newRound }) => {
           <Play
             deckUrl={deckUrl}
             player={player}
-            order={turnOrder}
+            order={roundOrder}
             sendBookInfo={setBookInfo}
             book={bookNum}
             trumpSuit={trumpSuit}
@@ -268,7 +201,7 @@ const Round = ({ round, sendRoundScore, newRound }) => {
           <Play
             deckUrl={deckUrl}
             player={player}
-            order={turnOrder}
+            order={roundOrder}
             sendBookInfo={setBookInfo}
             book={bookNum}
             trumpSuit={trumpSuit}
@@ -283,7 +216,7 @@ const Round = ({ round, sendRoundScore, newRound }) => {
           <Play
             deckUrl={deckUrl}
             player={player}
-            order={turnOrder}
+            order={roundOrder}
             sendBookInfo={setBookInfo}
             book={bookNum}
             trumpSuit={trumpSuit}
@@ -295,10 +228,16 @@ const Round = ({ round, sendRoundScore, newRound }) => {
         <div>
           <BidInfo bidData={bidData} suit={trumpSuit} book={bookNum} />
           <div>Round Over! </div>
-          <div>Team 1: {team1BookCount }</div>
-          <div>Team 2: {team2BookCount }</div>
-            <button onClick={() => { sendRoundScore([team1BookCount, team2BookCount]);
-                                     setStage("Over")}}>Next Round</button>
+          <div>Team 1: {team1BookCount}</div>
+          <div>Team 2: {team2BookCount}</div>
+          <button
+            onClick={() => {
+              sendRoundScore([team1BookCount, team2BookCount]);
+              setStage("Over");
+            }}
+          >
+            Next Round
+          </button>
         </div>
       )}
     </div>

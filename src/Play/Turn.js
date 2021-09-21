@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { getBestCard, getWorstCard } from "./scripts";
-import useFetch from "./useFetch";
+import { getBestCard, getWorstCard } from "../scripts";
+import useFetch from "../useFetch";
 
 const Turn = ({ deckUrl, player, position, leadSuit, sendPlayCard, trumpSuit }) => {
 
@@ -12,7 +12,6 @@ const Turn = ({ deckUrl, player, position, leadSuit, sendPlayCard, trumpSuit }) 
 
     if (data && !cardPlay) {
         cards = data.piles[player].cards;
-        
         var taco = playCard(position, cards, trumpSuit);
         
         fetch(deckUrl + "/pile/discard/add/?cards=" + taco.code)
