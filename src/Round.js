@@ -106,8 +106,6 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
     if (team2BookCount === 6) {
       team2BookCount = 9;
     }
-    // console.log("roundWinner:", team1BookCount, team2BookCount);
-    //    sendRoundScore([team1BookCount, team2BookCount]);
   }
 
   return (
@@ -163,6 +161,7 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
             sendBookInfo={setBookInfo}
             book={bookNum}
             trumpSuit={trumpSuit}
+            bookInfo={log}
           />
         </div>
       )}
@@ -177,6 +176,7 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
             sendBookInfo={setBookInfo}
             book={bookNum}
             trumpSuit={trumpSuit}
+            bookInfo={log}
           />
         </div>
       )}
@@ -191,6 +191,7 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
             sendBookInfo={setBookInfo}
             book={bookNum}
             trumpSuit={trumpSuit}
+            bookInfo={log}
           />
         </div>
       )}
@@ -205,6 +206,7 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
             sendBookInfo={setBookInfo}
             book={bookNum}
             trumpSuit={trumpSuit}
+            bookInfo={log}
           />
         </div>
       )}
@@ -220,6 +222,7 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
             sendBookInfo={setBookInfo}
             book={bookNum}
             trumpSuit={trumpSuit}
+            bookInfo={log}
           />
         </div>
       )}

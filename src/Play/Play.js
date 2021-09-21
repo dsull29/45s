@@ -4,7 +4,7 @@ import PlayCard from "./PlayCard";
 import PlayerTurn from "./PlayerTurn";
 import Turn from "./Turn";
 
-const Play = ({ deckUrl, player, order, sendBookInfo, book, trumpSuit }) => {
+const Play = ({ deckUrl, player, order, sendBookInfo, book, trumpSuit, bookInfo }) => {
   const [playCard1, setPlayCard1] = useState("");
   const [playCard2, setPlayCard2] = useState("");
   const [playCard3, setPlayCard3] = useState("");
@@ -17,18 +17,14 @@ const Play = ({ deckUrl, player, order, sendBookInfo, book, trumpSuit }) => {
   let bookNum = book;
 
   if (turn === 1 && playCard1) {
-    // Need to add code that moves the played card to the book pile
     let guac = playCard1.code.charAt(1);
     setLeadSuit(guac);
     setTurn(2);
   } else if (turn === 2 && playCard2) {
-    // Need to add code that moves the played card to the book pile
     setTurn(3);
   } else if (turn === 3 && playCard3) {
-    // Need to add code that moves the played card to the book pile
     setTurn(4);
   } else if (turn === 4 && playCard4) {
-    // Need to add code that moves the played card to the book pile
     setTurn(5);
   } else if (turn === 5) {
     book = [playCard1, playCard2, playCard3, playCard4];
@@ -41,7 +37,8 @@ const Play = ({ deckUrl, player, order, sendBookInfo, book, trumpSuit }) => {
       }
     }
     let highCard = book[winner].code;
-    let tempLog = { bookNum, winner, highCard };
+    let winningPlayer = order[winner]
+    let tempLog = { bookNum, winningPlayer, highCard };
     sendBookInfo(tempLog);
   }
 
@@ -75,6 +72,17 @@ const Play = ({ deckUrl, player, order, sendBookInfo, book, trumpSuit }) => {
     }
   }
 
+  function DisplayLog() {
+    let x = [];
+    
+    for (book of bookInfo) {
+      x.push(<div>{book.bookNum}: {`${book.winningPlayer === "player1" || book.winningPlayer === "player3" ? "Team 1" : "Team 2"}`} {book.highCard} {book.winningPlayer}</div>)
+    }
+    
+    return <div>{x}</div>
+
+  }
+
   return (
     <div>
       <div className="handInfo">
@@ -85,53 +93,15 @@ const Play = ({ deckUrl, player, order, sendBookInfo, book, trumpSuit }) => {
       {turn > 1 && !playCard2 && whoseTurn(2, setPlayCard2)}        
       {turn > 2 && !playCard3 && whoseTurn(3, setPlayCard3)}        
       {turn > 3 && !playCard4 && whoseTurn(4, setPlayCard4)}                      
-        {/* <div>
-          {turn > 0 && !playCard1 && (
-            <Turn
-              deckUrl={deckUrl}
-              player={order[0]}
-              position={1}
-              sendPlayCard={setPlayCard1}
-              trumpSuit={trumpSuit}
-            />
-          )}
-          {turn > 1 && !playCard2 && (
-            <Turn
-              deckUrl={deckUrl}
-              player={order[1]}
-              position={2}
-              sendPlayCard={setPlayCard2}
-              trumpSuit={trumpSuit}
-              leadSuit={leadSuit}
-            />
-          )}
-          {turn > 2 && !playCard3 && (
-            <Turn
-              deckUrl={deckUrl}
-              player={order[2]}
-              position={3}
-              sendPlayCard={setPlayCard3}
-              trumpSuit={trumpSuit}
-              leadSuit={leadSuit}
-            />
-          )}
-          {turn > 3 && !playCard4 && (
-            <PlayerTurn
-              deckUrl={deckUrl}
-              player={order[3]}
-              position={4}
-              sendPlayCard={setPlayCard4}
-              trumpSuit={trumpSuit}
-              leadSuit={leadSuit}
-            />
-          )}
-        </div> */}
+
         {playCard1 && <PlayCard card={playCard1} />}
         {playCard2 && <PlayCard card={playCard2} />}
         {playCard3 && <PlayCard card={playCard3} />}
         {playCard4 && <PlayCard card={playCard4} />}
       </div>
+    { bookInfo && DisplayLog()}
     </div>
+
   );
 };
 
