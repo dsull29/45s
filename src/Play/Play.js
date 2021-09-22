@@ -26,7 +26,9 @@ const Play = ({ deckUrl, player, order, sendBookInfo, book, trumpSuit, bookInfo 
   } else if (turn === 3 && playCard3) {
     setTurn(4);
   } else if (turn === 4 && playCard4) {
-    setTurn(5);
+    setTimeout(()=> {
+       setTurn(5);
+      },2000);
   } else if (turn === 5) {
     book = [playCard1, playCard2, playCard3, playCard4];
     let curBestValue = 50;
@@ -86,14 +88,12 @@ const Play = ({ deckUrl, player, order, sendBookInfo, book, trumpSuit, bookInfo 
 
   return (
     <div>
-      <div className="handInfo">
-        {turn === 5 && <div>Find Winner Now, {winner}</div>}
-      </div>
       <div className="hand">
       {turn > 0 && !playCard1 && whoseTurn(1, setPlayCard1)}
       {turn > 1 && !playCard2 && whoseTurn(2, setPlayCard2)}        
       {turn > 2 && !playCard3 && whoseTurn(3, setPlayCard3)}        
-      {turn > 3 && !playCard4 && whoseTurn(4, setPlayCard4)}                      
+      {turn > 3 && !playCard4 && whoseTurn(4, setPlayCard4)}  
+      {turn === 4 && playCard4 && <div>Napkins on the table!</div>}                    
 
         {playCard1 && <PlayCard card={playCard1} />}
         {playCard2 && <PlayCard card={playCard2} />}
