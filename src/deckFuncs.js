@@ -62,3 +62,28 @@ export function getRoundOrder(round) {
   };
   return order
 }// module.exports = { dealHand, asyncCall};
+
+/** Get's the order relative to the last player to win a hand
+ ** The player who won the last book goes first
+ * @param  {String} lastWinner name of the last player to win a book
+ */
+ export function getBookOrder(mung,roundOrder) {
+  let order = [];
+  let lastBook = mung[mung.length-1]
+  let lastWinner
+  if (lastBook) {
+     lastWinner = lastBook.winningPlayer
+  }
+  if (lastWinner === "player2") {
+    order =  ["player2", "player3", "player4", "player1"];
+  } else if (lastWinner === "player3") {
+    order = ["player3", "player4", "player1", "player2"];
+  } else if (lastWinner === "player4") {
+    order = ["player4", "player1", "player2", "player3"];
+  } else if (lastWinner === "player1") {
+    order = ["player1", "player2", "player3", "player4"];
+  } else { 
+    order = roundOrder;
+  }
+  return order
+}

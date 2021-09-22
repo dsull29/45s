@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { getCardValue } from "../cardValues";
+import { getBookOrder } from "../deckFuncs";
 import PlayCard from "./PlayCard";
 import PlayerTurn from "./PlayerTurn";
 import Turn from "./Turn";
@@ -15,7 +16,7 @@ const Play = ({ deckUrl, player, order, sendBookInfo, book, trumpSuit, bookInfo 
   var winner;
 
   let bookNum = book;
-
+  let bookOrder = getBookOrder(bookInfo,order)
   if (turn === 1 && playCard1) {
     let guac = playCard1.code.charAt(1);
     setLeadSuit(guac);
@@ -37,7 +38,7 @@ const Play = ({ deckUrl, player, order, sendBookInfo, book, trumpSuit, bookInfo 
       }
     }
     let highCard = book[winner].code;
-    let winningPlayer = order[winner]
+    let winningPlayer = bookOrder[winner]
     let tempLog = { bookNum, winningPlayer, highCard };
     sendBookInfo(tempLog);
   }
@@ -48,7 +49,7 @@ const Play = ({ deckUrl, player, order, sendBookInfo, book, trumpSuit, bookInfo 
     // need to checkPlayerPosition = Turn and then render the PlayerTurn instead of CpuTurn
     //
     // console.log(val,order[val-1])
-    if (checkPlayerPosition(player, order) === val) {
+    if (checkPlayerPosition(player, bookOrder) === val) {
       return (
         <PlayerTurn
           deckUrl={deckUrl}
@@ -63,7 +64,7 @@ const Play = ({ deckUrl, player, order, sendBookInfo, book, trumpSuit, bookInfo 
       return (
         <Turn
           deckUrl={deckUrl}
-          player={order[val-1]}
+          player={bookOrder[val-1]}
           position={val}
           sendPlayCard={sendPlayCard}
           trumpSuit={trumpSuit}

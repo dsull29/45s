@@ -82,7 +82,7 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
     let highCardWinner = null;
 
     for (let x = 0; x < 5; x++) {
-      if (log[x].winner === 1 || log[x].winner === 3) {
+      if (log[x].winningPlayer === "player1" || log[x].winningPlayer === "player3") {
         team1BookCount += 1;
       } else {
         team2BookCount += 1;
@@ -90,10 +90,10 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
       let cardValue = getCardValue(log[x].highCard, trumpSuit);
       if (highCard > cardValue) {
         highCard = cardValue;
-        highCardWinner = log[x].winner;
+        highCardWinner = log[x].winningPlayer;
       }
     }
-    if (highCardWinner === 1 || highCardWinner === 3) {
+    if (highCardWinner === "player1" || highCardWinner === "player3") {
       team1BookCount += 1;
     } else {
       team2BookCount += 1;
