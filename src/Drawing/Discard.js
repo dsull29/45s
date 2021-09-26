@@ -1,6 +1,6 @@
 import { useState } from "react";
+import { getNewCards } from "../deckFuncs";
 import "./index.css";
-import { getNewCards } from "./scripts";
 import useFetch from "./useFetch";
 
 const Discard = ({ deckUrl, player, sendDiscardData }) => {

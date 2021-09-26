@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
-// import useFetch from "./useFetch";
 import Hand from "./Hand";
-import Bid from "./Bidding/Bid";
 import { dealHands } from "./deckFuncs";
 import SelectSuit from "./Bidding/SelectSuit";
-import Discard from "./Discard";
 import BidInfo from "./Bidding/BidInfo";
 import Play from "./Play/Play";
 import { getCardValue } from "./cardValues";
 import Bidding from "./Bidding/Bidding";
+import Drawing from "./Drawing/Drawing";
 
 const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
   const [hands, setHands] = useState(null);
@@ -16,11 +14,10 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
   const [bidData, setBidData] = useState("");
   const [stage, setStage] = useState("Deal");
   const [trumpSuit, setTrumpSuit] = useState("");
-  const [discardData, setDiscardData] = useState("");
+  const [discardData, setDiscardData] = useState(false);
   const [bookInfo, setBookInfo] = useState(null);
   const [bookNum, setBookNum] = useState(1);
   const [log, setLog] = useState([]);
-  const [turnOrder, setTurnOrder] = useState([]);
   const [roundOrder, setRoundOrder] = useState(null);
 
   const order = ["player1", "player2", "player3", "player4"];
@@ -32,17 +29,17 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
     setBidData("");
     setStage("Deal");
     setTrumpSuit("");
-    setDiscardData("");
+    setDiscardData(false);
     setBookInfo(null);
     setBookNum(1);
     setLog([]);
-    setRoundOrder(null)
+    setRoundOrder(null);
     console.log("wipe");
   }
 
   const player = "player1";
   const dealer = order[(round - 1) % 4];
-  
+
   useEffect(() => {
     dealHands(deckUrl, round, setIsPending, setHands, setRoundOrder);
   }, [deckUrl, round]);
@@ -83,7 +80,10 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
     let highCardWinner = null;
 
     for (let x = 0; x < 5; x++) {
-      if (log[x].winningPlayer === "player1" || log[x].winningPlayer === "player3") {
+      if (
+        log[x].winningPlayer === "player1" ||
+        log[x].winningPlayer === "player3"
+      ) {
         team1BookCount += 1;
       } else {
         team2BookCount += 1;
@@ -116,7 +116,11 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
       {stage === "Bid" && hands && roundOrder && (
         <div>
           <Hand deckUrl={deckUrl} player={player} stage={stage} />
-          <Bidding deckUrl= {deckUrl} bidOrder={roundOrder} sendBidData={setBidData}/>
+          <Bidding
+            deckUrl={deckUrl}
+            bidOrder={roundOrder}
+            sendBidData={setBidData}
+          />
         </div>
       )}
       {stage === "SuitSelect" && (
@@ -124,7 +128,7 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
           <BidInfo bidData={bidData} />
           <Hand deckUrl={deckUrl} player={player} stage={stage} />
           <SelectSuit
-            deckUrl = {deckUrl}
+            deckUrl={deckUrl}
             bidData={bidData}
             sendTrumpSuit={setTrumpSuit}
           />
@@ -134,17 +138,12 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
         <div>
           <BidInfo bidData={bidData} suit={trumpSuit} />
           <Hand deckUrl={deckUrl} player={player} stage={stage} />
-          <Discard
+          <Drawing
             deckUrl={deckUrl}
-            player={player}
+            roundOrder={roundOrder}
+            trumpSuit = {trumpSuit}
             sendDiscardData={setDiscardData}
           />
-        </div>
-      )}
-      {stage === "Redraw" && (
-        <div>
-          <BidInfo bidData={bidData} suit={trumpSuit} />
-          <div>{discardData.toString()}</div>
         </div>
       )}
       {stage === "Play" && bookNum === 1 && (

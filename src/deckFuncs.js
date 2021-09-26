@@ -1,18 +1,32 @@
-export async function dealHands(deckUrl,round,setIsPending,setHands,setRoundOrder) {
+export async function dealHands(
+  deckUrl,
+  round,
+  setIsPending,
+  setHands,
+  setRoundOrder
+) {
   const order = getRoundOrder(round);
   await fetch(deckUrl + "/shuffle/");
   const drawresponse = await fetch(deckUrl + "/draw/?count=20");
   const drawData = await drawresponse.json();
   let hands = hash(drawData.cards);
-  console.log("handCheck",hands,drawData)
-  await fetch(deckUrl + "/pile/" + order[0] + "/add/?cards=" + hands[0].toString())
-  await fetch(deckUrl + "/pile/" + order[1] + "/add/?cards=" + hands[1].toString())
-  await fetch(deckUrl + "/pile/" + order[2] + "/add/?cards=" + hands[2].toString())
-  const done = await fetch(deckUrl + "/pile/" + order[3] + "/add/?cards=" + hands[3].toString())
+  console.log("handCheck", hands, drawData);
+  await fetch(
+    deckUrl + "/pile/" + order[0] + "/add/?cards=" + hands[0].toString()
+  );
+  await fetch(
+    deckUrl + "/pile/" + order[1] + "/add/?cards=" + hands[1].toString()
+  );
+  await fetch(
+    deckUrl + "/pile/" + order[2] + "/add/?cards=" + hands[2].toString()
+  );
+  const done = await fetch(
+    deckUrl + "/pile/" + order[3] + "/add/?cards=" + hands[3].toString()
+  );
   if (done) {
-    setRoundOrder(order)
-    setHands(hands)
-    setIsPending(false)
+    setRoundOrder(order);
+    setHands(hands);
+    setIsPending(false);
   }
 }
 
@@ -49,41 +63,93 @@ function hash(cards) {
 }
 
 export function getRoundOrder(round) {
-  let val = (round-1) % 4 
+  let val = (round - 1) % 4;
   let order;
-  if (val===0) {
-    order =  ["player2", "player3", "player4", "player1"];
-  } else if (val===1) {
+  if (val === 0) {
+    order = ["player2", "player3", "player4", "player1"];
+  } else if (val === 1) {
     order = ["player3", "player4", "player1", "player2"];
-  } else if (val===2) {
+  } else if (val === 2) {
     order = ["player4", "player1", "player2", "player3"];
-  } else if (val===3) {
+  } else if (val === 3) {
     order = ["player1", "player2", "player3", "player4"];
-  };
-  return order
-}// module.exports = { dealHand, asyncCall};
+  }
+  return order;
+} // module.exports = { dealHand, asyncCall};
 
 /** Get's the order relative to the last player to win a hand
  ** The player who won the last book goes first
  * @param  {String} lastWinner name of the last player to win a book
  */
- export function getBookOrder(mung,roundOrder) {
+export function getBookOrder(mung, roundOrder) {
   let order = [];
-  let lastBook = mung[mung.length-1]
-  let lastWinner
+  let lastBook = mung[mung.length - 1];
+  let lastWinner;
   if (lastBook) {
-     lastWinner = lastBook.winningPlayer
+    lastWinner = lastBook.winningPlayer;
   }
   if (lastWinner === "player2") {
-    order =  ["player2", "player3", "player4", "player1"];
+    order = ["player2", "player3", "player4", "player1"];
   } else if (lastWinner === "player3") {
     order = ["player3", "player4", "player1", "player2"];
   } else if (lastWinner === "player4") {
     order = ["player4", "player1", "player2", "player3"];
   } else if (lastWinner === "player1") {
     order = ["player1", "player2", "player3", "player4"];
-  } else { 
+  } else {
     order = roundOrder;
   }
-  return order
+  return order;
+}
+
+// export async function dealHands(deckUrl,round,setIsPending,setHands,setRoundOrder) {
+//   const order = getRoundOrder(round);
+//   await fetch(deckUrl + "/shuffle/");
+//   const drawresponse = await fetch(deckUrl + "/draw/?count=20");
+//   const drawData = await drawresponse.json();
+//   let hands = hash(drawData.cards);
+//   console.log("handCheck",hands,drawData)
+//   await fetch(deckUrl + "/pile/" + order[0] + "/add/?cards=" + hands[0].toString())
+//   await fetch(deckUrl + "/pile/" + order[1] + "/add/?cards=" + hands[1].toString())
+//   await fetch(deckUrl + "/pile/" + order[2] + "/add/?cards=" + hands[2].toString())
+//   const done = await fetch(deckUrl + "/pile/" + order[3] + "/add/?cards=" + hands[3].toString())
+//   if (done) {
+//     setRoundOrder(order)
+//     setHands(hands)
+//     setIsPending(false)
+//   }
+// }
+
+/** Handles discarding, drawing new cards, and assigning that number of cards to the player
+ * @param  {String} deckUrl URL of the deck being used for this round
+ * @param  {Array} discardCodes Card codes to discard
+ * @param  {String} player Player whose hand is being worked
+ * @param  {Function} sendDiscardData Callback function to 'Play' to signify the process is done
+ */
+export async function getNewCards(
+  deckUrl,
+  discardCodes,
+  player,
+  sendDiscardData,
+  sendDiscardPending
+) {
+  const discardResponse = await fetch(deckUrl + "/pile/discard/add/?cards=" + discardCodes.toString())
+  await discardResponse.json()
+  //  const redrawCount = 5 - discardData.piles[player].remaining;
+  const redrawResponse = await fetch(deckUrl + "/draw/?count=" + discardCodes.length);
+  const redrawData = await redrawResponse.json();
+  console.log("redraw", player, discardCodes,redrawData.cards);
+  let cards = [];
+  if (redrawData.cards) {
+    for (let i = 0; i < redrawData.cards.length; i++)
+      cards.push(redrawData.cards[i].code);
+  }
+  const assResponse = await fetch(
+    deckUrl + "/pile/" + player + "/add/?cards=" + cards.toString()
+  )
+  const done = await assResponse.json();
+  if (done) {
+    sendDiscardData(discardCodes.length)
+    sendDiscardPending(false)
+  }
 }

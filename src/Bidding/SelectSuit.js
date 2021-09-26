@@ -9,12 +9,7 @@ const SelectSuit = ({ deckUrl, bidData, sendTrumpSuit }) => {
     const url = deckUrl + "/pile/" + bidder + "/list/";
     const { data, error, isPending } = useFetch(url);
 
-    const handleSuitSubmit = (e) => {
-        e.preventDefault();
-        sendTrumpSuit(trumpSuit)
-    };
     const player = "player1";
-    console.log("BidData",bidder)
 
     let humanBidder;
     if (data) {
@@ -30,12 +25,17 @@ const SelectSuit = ({ deckUrl, bidData, sendTrumpSuit }) => {
           }
           let handValues = evaluateHand(cardCodes);
           let trumpSuit = getBestSuit(handValues)
-          //   let playerBid = getBid(handValues,bidData);
-        //   let bidYooo = {bidder,playerBid}
-        console.log("sendcputrump",handValues,trumpSuit)
         sendTrumpSuit(trumpSuit)
         }
       }
+
+      const handleSuitSubmit = (e) => {
+        e.preventDefault();
+        sendTrumpSuit(trumpSuit)
+    };
+
+
+
 
     return (
         <div>

@@ -48,8 +48,10 @@ code {
   gap: .5fr;
   cursor: pointer;
   justify-content: center;
+  max-width: 800px;
   padding-top: .25fr;
   padding-bottom: .25fr;
+  align-self:center;
 }
 
 .discardHand {
@@ -63,6 +65,7 @@ code {
   justify-content: center;
   padding-top: .25rem;
   padding-bottom: .25rem;
+  max-width: 800px;
 }
 
 input[type=checkbox] {width:30px; height:30px;}

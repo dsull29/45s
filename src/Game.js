@@ -3,6 +3,7 @@ import Score from "./Score/Score";
 import Round from "./Round";
 import useFetch from "./useFetch";
 import { getFreshDeck } from "./deckFuncs";
+import Footer from "./Footer/Footer";
 
 const Game = () => {
   const { data, isPending, error } = useFetch(
@@ -10,9 +11,10 @@ const Game = () => {
   );
 
   const [round, setRound] = useState(1);
-  const [gameScore, setGameScore] = useState([0, 0]);
+  const [gameScore, setGameScore] = useState([30, 0]);
   const [roundScore, setRoundScore] = useState(null);
   const [scoreLog, setScoreLog] = useState([]);
+  const [gameOver, setGameOver] = useState("");
 
   let deckUrl = null;
   if (data) {
@@ -28,6 +30,12 @@ const Game = () => {
     console.log("scoring", tempScore, roundScore, round);
     setScoreLog(scoreLog);
     setGameScore(tempScore);
+    if (tempScore[0] > 30) {
+      setGameOver("Team 1 Wins");
+    }
+    if (tempScore[1] > 30) {
+      setGameOver("Team 2 Wins");
+    }
     setRoundScore(null);
     setRound(round + 1);
   }
@@ -36,7 +44,7 @@ const Game = () => {
     <div>
       {isPending && <div>Setting up...</div>}
       {error && <div>{error}</div>}
-      {deckUrl && (
+      {deckUrl && !gameOver && (
         <div className="game">
           <Score round={round} gameScore={gameScore} />
           <Round
@@ -45,6 +53,15 @@ const Game = () => {
             sendRoundScore={setRoundScore}
             newRound={true}
           />
+          <Footer />
+        </div>
+      )}
+      {gameOver && (
+        <div>
+          <h1>{gameOver}</h1>
+          <h3>Team 1: {gameScore[0]}</h3>
+          <h3>Team 2: {gameScore[1]}</h3>
+          <button>Play Again</button>
         </div>
       )}
     </div>
