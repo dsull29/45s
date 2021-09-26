@@ -11,7 +11,7 @@ const Game = () => {
   );
 
   const [round, setRound] = useState(1);
-  const [gameScore, setGameScore] = useState([30, 0]);
+  const [gameScore, setGameScore] = useState([0, 0]);
   const [roundScore, setRoundScore] = useState(null);
   const [scoreLog, setScoreLog] = useState([]);
   const [gameOver, setGameOver] = useState("");
