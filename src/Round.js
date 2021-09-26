@@ -107,6 +107,34 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
     if (team2BookCount === 6) {
       team2BookCount = 9;
     }
+
+// TODO clean this up and turn it into a function
+    let bid = bidData.highBid;
+    if (bidData.highBidder === "player1" || bidData.highBidder === "player3") {
+      if (bid === "15" && team1BookCount < 3) {
+        team1BookCount = 0 - 3;
+      } else if (bid === "20" && team1BookCount < 4) {
+        team1BookCount = 0 - 4;
+      } else if (bid === "25" && team1BookCount < 5) {
+        team1BookCount = 0 - 5;
+      } else if (bid === "30" && team1BookCount < 6) {
+        team1BookCount = 0 - 6;
+      } else if (bid === "30No" && team2BookCount < 6) {
+        team2BookCount = 0 - 12;
+      }
+    } else {
+      if (bid === "15" && team2BookCount < 3) {
+        team2BookCount = 0 - 3;
+      } else if (bid === "20" && team2BookCount < 4) {
+        team2BookCount = 0 - 4;
+      } else if (bid === "25" && team2BookCount < 5) {
+        team2BookCount = 0 - 5;
+      } else if (bid === "30" && team2BookCount < 6) {
+        team2BookCount = 0 - 6;
+      } else if (bid === "30No" && team2BookCount < 6) {
+        team2BookCount = 0 - 12;
+      }
+    }
   }
 
   return (
@@ -141,7 +169,7 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
           <Drawing
             deckUrl={deckUrl}
             roundOrder={roundOrder}
-            trumpSuit = {trumpSuit}
+            trumpSuit={trumpSuit}
             sendDiscardData={setDiscardData}
           />
         </div>
