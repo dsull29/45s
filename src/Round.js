@@ -120,7 +120,7 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
       } else if (bid === "30" && team1BookCount < 6) {
         team1BookCount = 0 - 6;
       } else if (bid === "30No" && team2BookCount < 6) {
-        team2BookCount = 0 - 12;
+        team1BookCount = 0 - 12;
       }
     } else {
       if (bid === "15" && team2BookCount < 3) {
