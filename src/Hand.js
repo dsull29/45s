@@ -5,7 +5,6 @@ const Hand = ({ deckUrl, player, round }) => {
   const { data, isPending, error } = useFetch(
     deckUrl + "/pile/" + player + "/list/"
   );
-    
   var cards = [];
   if (data && data.piles[player] && data.piles[player].cards) {
     cards = data.piles[player].cards;

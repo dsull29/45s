@@ -8,31 +8,24 @@ export function getDealer(dealers) {
   return { dealer, order };
 }
 
-export function bidding(cards, bidders) {
-  let bestBid, highBidder;
-  var highBid = 0;
-  for (let i = 0; i < 3; i++) {
-    bestBid = getBid(evaluateHand(cards[i]));
-    if (bestBid > highBid) {
-      highBid = bestBid;
-      highBidder = bidders[i];
-    }
-  }
-  return { highBid, highBidder };
-}
+// export function bidding(cards, bidders) {
+//   let highBidder, bidderSuit;
+//   var highBid = 0;
+//   for (let i = 0; i < 3; i++) {
+//     // evaluate hands returns the hand strength in the order [Hearts,Diamonds,Spades,Clubs]
+//     let tempEval = evaluateHand(cards[i]);
+//     console.log(tempEval);
+//     let { bestBid, bestSuit } = getBid(evaluateHand(cards[i]));
+//     console.log(bestBid, bestSuit);
+//     if (bestBid > highBid) {
+//       highBid = bestBid;
+//       highBidder = bidders[i];
+//       bidderSuit = bestSuit;
+//     }
+//   }
+//   return { highBid, highBidder, bidderSuit };
+// }
 
-function getBid(handValues) {
-  var bestHandVal = handValues.sort(function (a, b) {
-    return a - b;
-  })[0];
-  var playerBid = null;
-  if (bestHandVal < 0 - 25) {
-    playerBid = "20";
-  } else if (bestHandVal < 0 - 5) {
-    playerBid = "15";
-  }
-  return playerBid;
-}
 
 export function getWorstCard(cards, trump) {
   var worstCard = null;
@@ -73,22 +66,9 @@ export function getPlayerHand(url, player) {
       }
       return res.json();
     })
-    .then((data) => {
-    });
+    .then((data) => {});
   playerHand.then((data) => {
     return data;
-    // let cards = data.piles[player].cards
-    // let codes = []
-    // let tempData = null
-    // for (let i = 0; i < cards.length; i++) {
-    //     codes.push(cards[i].code)
-    // }
-    // tempData = {
-    //     player: player,
-    //     cards,
-    //     codes
-    // }
-    // return tempData
   });
 
   return tempData;
@@ -198,4 +178,13 @@ export async function playCardNow(deckUrl, playerCard, sendPlayerCard) {
       return playerCard;
     });
   sendPlayerCard(playerCard);
+}
+
+/** finds the players position
+ * @param  {String} player handle of the player 
+ * @param  {Array} order order of players
+ */
+ export function checkPlayerPosition(player, order) {
+  let num = order.indexOf(player) + 1;
+  return num;
 }

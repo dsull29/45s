@@ -19,21 +19,13 @@ const PlayerTurn = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log("nachos", playerCard, e);
     playCardNow(deckUrl, cards[playerCard], sendPlayCard);
   };
 
-  // console.log(sendPlayCard)
   if (data) {
     cards = data.piles[player].cards;
   }
 
-//   if (cards[0] && !playerCard) {
-//     // setPlayerCard(cards[0]);
-//     setPlayerCard(0);
-//   }
-
-  // console.log("PC",playerCard)
   return (
     <div>
       {data && (

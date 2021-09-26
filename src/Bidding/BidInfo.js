@@ -5,8 +5,8 @@
  */
 const BidInfo = ({ bidData, suit, book }) => {
 
-    var bid = bidData.highBid.highBid
-    var bidder = bidData.highBidder.highBidder
+    var bid = bidData.highBid
+    var bidder = bidData.highBidder
 
     return (
         <div>

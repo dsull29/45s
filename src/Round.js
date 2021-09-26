@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 // import useFetch from "./useFetch";
 import Hand from "./Hand";
-import Bid from "./Bid";
+import Bid from "./Bidding/Bid";
 import { dealHands } from "./deckFuncs";
-import SelectSuit from "./SelectSuit";
+import SelectSuit from "./Bidding/SelectSuit";
 import Discard from "./Discard";
-import BidInfo from "./BidInfo";
+import BidInfo from "./Bidding/BidInfo";
 import Play from "./Play/Play";
 import { getCardValue } from "./cardValues";
+import Bidding from "./Bidding/Bidding";
 
 const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
   const [hands, setHands] = useState(null);
@@ -115,12 +116,7 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
       {stage === "Bid" && hands && roundOrder && (
         <div>
           <Hand deckUrl={deckUrl} player={player} stage={stage} />
-          <Bid
-            hands={hands}
-            order={roundOrder}
-            dealer={dealer}
-            sendBidData={setBidData}
-          />
+          <Bidding deckUrl= {deckUrl} bidOrder={roundOrder} sendBidData={setBidData}/>
         </div>
       )}
       {stage === "SuitSelect" && (
@@ -128,7 +124,8 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
           <BidInfo bidData={bidData} />
           <Hand deckUrl={deckUrl} player={player} stage={stage} />
           <SelectSuit
-            highBidder={bidData.highBidder.highBidder}
+            deckUrl = {deckUrl}
+            bidData={bidData}
             sendTrumpSuit={setTrumpSuit}
           />
         </div>
