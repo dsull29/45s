@@ -10,14 +10,14 @@ const Bidding = ({ deckUrl, bidOrder, sendBidData }) => {
   const [turn, setTurn] = useState(1);
   const [bidData, setBidData] = useState({ highBid: null, highBidder: null });
 
-useEffect(() => {
-  setBid1("")
-  setBid2("")
-  setBid3("")
-  setBid4("")
-  setBidData({ highBid: null, highBidder: null })
-}, [bidOrder])
-   
+  useEffect(() => {
+    setBid1("");
+    setBid2("");
+    setBid3("");
+    setBid4("");
+    setBidData({ highBid: null, highBidder: null });
+  }, [bidOrder]);
+
   // need to call this one bidder at a time in it's own object.
   // probably want a nested structure like 'Play' where each
   // CPU player has their own component
@@ -33,14 +33,14 @@ useEffect(() => {
     case 1: {
       if (bid1) {
         // setTimeout(() => {
-          let { highBid, highBidder } = checkBid(bid1, bidData);
-          // console.log("plays",highBid,highBidder)
-          if (highBid) {
-            setBidData({ highBid, highBidder });
-            setTurn(2);
-          } else {
-            setTurn(2);
-          }
+        let { highBid, highBidder } = checkBid(bid1, bidData);
+        // console.log("plays",highBid,highBidder)
+        if (highBid) {
+          setBidData({ highBid, highBidder });
+          setTurn(2);
+        } else {
+          setTurn(2);
+        }
         // }, 1000);
       }
       break;
@@ -48,14 +48,14 @@ useEffect(() => {
     case 2: {
       if (bid2) {
         // setTimeout(() => {
-          let { highBid, highBidder } = checkBid(bid2, bidData);
-          // console.log("plays",highBid,highBidder)
-          if (highBid) {
-            setBidData({ highBid, highBidder });
-            setTurn(3);
-          } else {
-            setTurn(3);
-          }
+        let { highBid, highBidder } = checkBid(bid2, bidData);
+        // console.log("plays",highBid,highBidder)
+        if (highBid) {
+          setBidData({ highBid, highBidder });
+          setTurn(3);
+        } else {
+          setTurn(3);
+        }
         // }, 1000);
       } else {
         lastBid = bid1.playerBid;
@@ -66,13 +66,13 @@ useEffect(() => {
     case 3: {
       if (bid3) {
         // setTimeout(() => {
-          let { highBid, highBidder } = checkBid(bid3, bidData);
-          if (highBid) {
-            setBidData({ highBid, highBidder });
-            setTurn(4);
-          } else {
-            setTurn(4);
-          }
+        let { highBid, highBidder } = checkBid(bid3, bidData);
+        if (highBid) {
+          setBidData({ highBid, highBidder });
+          setTurn(4);
+        } else {
+          setTurn(4);
+        }
         // }, 1000);
       } else {
         lastBid = bid2.playerBid;
@@ -83,13 +83,13 @@ useEffect(() => {
     case 4: {
       if (bid4) {
         // setTimeout(() => {
-          let { highBid, highBidder } = checkBid(bid4, bidData);
-          if (highBid) {
-            setBidData({ highBid, highBidder });
-            setTurn(5);
-          } else {
-            setTurn(5);
-          }
+        let { highBid, highBidder } = checkBid(bid4, bidData);
+        if (highBid) {
+          setBidData({ highBid, highBidder });
+          setTurn(5);
+        } else {
+          setTurn(5);
+        }
         // }, 1000);
       } else {
         lastBid = bid3.playerBid;
@@ -100,15 +100,14 @@ useEffect(() => {
     case 5: {
       lastBid = bid4.playerBid;
       lastBidder = bid4.bidder;
-      console.log("sendBid",bidData)
-      sendBidData(bidData)
+      if (!bidData.highBid) {
+        sendBidData({ highBid: "15", highBidder: dealer });
+      } else {
+        // console.log("sendBid",bidData)
+        sendBidData(bidData);
+      }
     }
   }
-
-  // console.log("turn",turn);
-  // console.log("lastBid", lastBid, lastBidder);
-  // console.log("bidData", bidData);
-  // console.log("bidInfo",[bid1,bid2,bid3,bid4])
 
   return (
     <div>
