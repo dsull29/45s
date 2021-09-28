@@ -1,11 +1,22 @@
 import { useState } from "react";
 import { getCardValue } from "../cardValues";
 import { getBookOrder } from "../deckFuncs";
+import Hand from "../Hand";
 import PlayCard from "./PlayCard";
 import PlayerTurn from "./PlayerTurn";
+import PlayLog from "./PlayLog";
 import Turn from "./Turn";
+import "./play.css";
 
-const Play = ({ deckUrl, player, order, sendBookInfo, book, trumpSuit, bookInfo }) => {
+const Play = ({
+  deckUrl,
+  player,
+  order,
+  sendBookInfo,
+  book,
+  trumpSuit,
+  bookInfo,
+}) => {
   const [playCard1, setPlayCard1] = useState("");
   const [playCard2, setPlayCard2] = useState("");
   const [playCard3, setPlayCard3] = useState("");
@@ -13,10 +24,10 @@ const Play = ({ deckUrl, player, order, sendBookInfo, book, trumpSuit, bookInfo 
   const [leadSuit, setLeadSuit] = useState("");
   const [turn, setTurn] = useState(1);
 
-  var winner;
-
+  const playedCards = [playCard1, playCard2, playCard3, playCard4];
   let bookNum = book;
-  let bookOrder = getBookOrder(bookInfo,order)
+  let bookOrder = getBookOrder(bookInfo, order);
+
   if (turn === 1 && playCard1) {
     let guac = playCard1.code.charAt(1);
     setLeadSuit(guac);
@@ -26,31 +37,26 @@ const Play = ({ deckUrl, player, order, sendBookInfo, book, trumpSuit, bookInfo 
   } else if (turn === 3 && playCard3) {
     setTurn(4);
   } else if (turn === 4 && playCard4) {
-    setTimeout(()=> {
-       setTurn(5);
-      },2000);
+    setTimeout(() => {
+      setTurn(5);
+    }, 2000);
   } else if (turn === 5) {
-    book = [playCard1, playCard2, playCard3, playCard4];
     let curBestValue = 50;
-    for (let i = 0; i < book.length; i++) {
-      let val = getCardValue(book[i].code, trumpSuit);
+    let winner;
+    for (let i = 0; i < playedCards.length; i++) {
+      let val = getCardValue(playedCards[i].code, trumpSuit);
       if (val < curBestValue) {
         curBestValue = val;
         winner = i;
       }
     }
-    let highCard = book[winner].code;
-    let winningPlayer = bookOrder[winner]
+    let highCard = playedCards[winner].code;
+    let winningPlayer = bookOrder[winner];
     let tempLog = { bookNum, winningPlayer, highCard };
     sendBookInfo(tempLog);
   }
 
   function whoseTurn(val, sendPlayCard) {
-    // want to check whose turn it is to decide which card to render
-    // right now everything is set to work on RoundOrder and there's only one player
-    // need to checkPlayerPosition = Turn and then render the PlayerTurn instead of CpuTurn
-    //
-    // console.log(val,order[val-1])
     if (checkPlayerPosition(player, bookOrder) === val) {
       return (
         <PlayerTurn
@@ -66,7 +72,7 @@ const Play = ({ deckUrl, player, order, sendBookInfo, book, trumpSuit, bookInfo 
       return (
         <Turn
           deckUrl={deckUrl}
-          player={bookOrder[val-1]}
+          player={bookOrder[val - 1]}
           position={val}
           sendPlayCard={sendPlayCard}
           trumpSuit={trumpSuit}
@@ -75,41 +81,62 @@ const Play = ({ deckUrl, player, order, sendBookInfo, book, trumpSuit, bookInfo 
     }
   }
 
-  function DisplayLog() {
-    let x = [];
-    
-    for (book of bookInfo) {
-      x.push(<div>{book.bookNum}: {`${book.winningPlayer === "player1" || book.winningPlayer === "player3" ? "Team 1" : "Team 2"}`} {book.highCard} {book.winningPlayer}</div>)
-    }
-    
-    return <div>{x}</div>
-
+  function getPlayerCard(player, order) {
+    let num = order.indexOf(player);
+    return playedCards[num];
   }
 
   return (
     <div>
-      <div className="hand">
-      {turn > 0 && !playCard1 && whoseTurn(1, setPlayCard1)}
-      {turn > 1 && !playCard2 && whoseTurn(2, setPlayCard2)}        
-      {turn > 2 && !playCard3 && whoseTurn(3, setPlayCard3)}        
-      {turn > 3 && !playCard4 && whoseTurn(4, setPlayCard4)}  
-      {turn === 4 && playCard4 && <div>Napkins on the table!</div>}                    
+      <div className="playboard">
+        <div className="playboardrow">
+          <div className="playboardbox">
+            <div className="playboardbooknum">Book: {book || 1} </div>
+          </div>
+          <div className="playboardbox player3">
+            <PlayCard card={getPlayerCard("Partner", bookOrder)} />
+          </div>
+          <div className="playboardbox">
+            <PlayLog bookInfo={bookInfo} />
+          </div>
+        </div>
 
-        {playCard1 && <PlayCard card={playCard1} />}
-        {playCard2 && <PlayCard card={playCard2} />}
-        {playCard3 && <PlayCard card={playCard3} />}
-        {playCard4 && <PlayCard card={playCard4} />}
+        <div className="playboardrow">
+          <div className="playboardbox player2">
+            <PlayCard card={getPlayerCard("Mario", bookOrder)} />
+          </div>
+          <div className="playboardbox"></div>
+          <div className="playboardbox player4">
+            <PlayCard card={getPlayerCard("Luigi", bookOrder)} />
+          </div>
+        </div>
+
+        <div className="playboardrow">
+          <div className="playboardbox"></div>
+          <div className="playboardbox player1">
+            <PlayCard card={getPlayerCard("You", bookOrder)} />
+          </div>
+          <div className="playboardbox"></div>
+        </div>
       </div>
-    { bookInfo && DisplayLog()}
-    </div>
 
+      <div className="playerwindow">
+        <Hand deckUrl={deckUrl} player={player} />
+        <div className="playeraction">
+          {turn > 0 && !playCard1 && whoseTurn(1, setPlayCard1)}
+          {turn > 1 && !playCard2 && whoseTurn(2, setPlayCard2)}
+          {turn > 2 && !playCard3 && whoseTurn(3, setPlayCard3)}
+          {turn > 3 && !playCard4 && whoseTurn(4, setPlayCard4)}
+        </div>
+      </div>
+    </div>
   );
 };
 
 export default Play;
 
 /** finds the human players position
- * @param  {String} player handle of the player (fixed to "player1" ATM)
+ * @param  {String} player player name
  * @param  {Array} order order of players (currently fixed to roundOrder)
  */
 export function checkPlayerPosition(player, order) {

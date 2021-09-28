@@ -1,8 +1,8 @@
-const PlayCard = ({ card }) => {
+const PlayCard = ({ card}) => {
 
     return (
         <div>
-            <img src={card.image} alt="Card" width="100%" height="100%" />
+            {card && <img src={card.image} alt="Card" height="150px" />}
         </div>
 
     );

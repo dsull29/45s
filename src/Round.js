@@ -7,20 +7,21 @@ import Play from "./Play/Play";
 import { getCardValue } from "./cardValues";
 import Bidding from "./Bidding/Bidding";
 import Drawing from "./Drawing/Drawing";
+import PlayWinner from "./Play/PlayWinner";
 
 const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
   const [hands, setHands] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [bidData, setBidData] = useState("");
   const [stage, setStage] = useState("Deal");
-  const [trumpSuit, setTrumpSuit] = useState("");
+  // const [trumpSuit, setTrumpSuit] = useState("");
   const [discardData, setDiscardData] = useState(false);
   const [bookInfo, setBookInfo] = useState(null);
   const [bookNum, setBookNum] = useState(1);
   const [log, setLog] = useState([]);
   const [roundOrder, setRoundOrder] = useState(null);
 
-  const order = ["player1", "player2", "player3", "player4"];
+  const order = ["You", "Mario", "Partner", "Luigi"];
 
   // TODO look into a way to reset states without having todo this...
   if (newRound && stage === "Over") {
@@ -28,7 +29,7 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
     setIsPending(true);
     setBidData("");
     setStage("Deal");
-    setTrumpSuit("");
+    // setTrumpSuit("");
     setDiscardData(false);
     setBookInfo(null);
     setBookNum(1);
@@ -37,11 +38,12 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
     console.log("wipe");
   }
 
-  const player = "player1";
+  const player = "You";
   const dealer = order[(round - 1) % 4];
 
   useEffect(() => {
-    dealHands(deckUrl, round, setIsPending, setHands, setRoundOrder);
+    // console.log("loopeffect",deckUrl,round)
+      dealHands(deckUrl, round, setIsPending, setHands, setRoundOrder);
   }, [deckUrl, round]);
 
   if (deckUrl && stage === "Deal" && !isPending) {
@@ -49,10 +51,6 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
   }
 
   if (bidData && stage === "Bid" && !isPending) {
-    setStage("SuitSelect");
-  }
-
-  if (trumpSuit && stage === "SuitSelect") {
     setStage("Discard");
   }
 
@@ -81,20 +79,20 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
 
     for (let x = 0; x < 5; x++) {
       if (
-        log[x].winningPlayer === "player1" ||
-        log[x].winningPlayer === "player3"
+        log[x].winningPlayer === "You" ||
+        log[x].winningPlayer === "Partner"
       ) {
         team1BookCount += 1;
       } else {
         team2BookCount += 1;
       }
-      let cardValue = getCardValue(log[x].highCard, trumpSuit);
+      let cardValue = getCardValue(log[x].highCard, bidData.trumpSuit);
       if (highCard > cardValue) {
         highCard = cardValue;
         highCardWinner = log[x].winningPlayer;
       }
     }
-    if (highCardWinner === "player1" || highCardWinner === "player3") {
+    if (highCardWinner === "You" || highCardWinner === "Partner") {
       team1BookCount += 1;
     } else {
       team2BookCount += 1;
@@ -108,9 +106,9 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
       team2BookCount = 9;
     }
 
-// TODO clean this up and turn it into a function
+    // TODO clean this up and turn it into a function
     let bid = bidData.highBid;
-    if (bidData.highBidder === "player1" || bidData.highBidder === "player3") {
+    if (bidData.highBidder === "You" || bidData.highBidder === "Partner") {
       if (bid === "15" && team1BookCount < 3) {
         team1BookCount = 0 - 3;
       } else if (bid === "20" && team1BookCount < 4) {
@@ -143,7 +141,6 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
       {/* {console.log("bida", stage, hands)} */}
       {stage === "Bid" && hands && roundOrder && (
         <div>
-          <Hand deckUrl={deckUrl} player={player} stage={stage} />
           <Bidding
             deckUrl={deckUrl}
             bidOrder={roundOrder}
@@ -151,85 +148,80 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
           />
         </div>
       )}
-      {stage === "SuitSelect" && (
+      {/* {stage === "SuitSelect" && (
         <div>
           <BidInfo bidData={bidData} />
-          <Hand deckUrl={deckUrl} player={player} stage={stage} />
           <SelectSuit
             deckUrl={deckUrl}
             bidData={bidData}
             sendTrumpSuit={setTrumpSuit}
           />
         </div>
-      )}
+      )} */}
       {stage === "Discard" && (
         <div>
-          <BidInfo bidData={bidData} suit={trumpSuit} />
-          <Hand deckUrl={deckUrl} player={player} stage={stage} />
+          <BidInfo bidData={bidData} suit={bidData.trumpSuit} />
           <Drawing
             deckUrl={deckUrl}
             roundOrder={roundOrder}
-            trumpSuit={trumpSuit}
+            trumpSuit={bidData.trumpSuit}
             sendDiscardData={setDiscardData}
           />
         </div>
       )}
       {stage === "Play" && bookNum === 1 && (
         <div>
-          <BidInfo bidData={bidData} suit={trumpSuit} book={bookNum} />
-          <Hand deckUrl={deckUrl} player={player} stage={stage} />
+          <BidInfo bidData={bidData} suit={bidData.trumpSuit} book={bookNum} />
           <Play
             deckUrl={deckUrl}
             player={player}
             order={roundOrder}
             sendBookInfo={setBookInfo}
             book={bookNum}
-            trumpSuit={trumpSuit}
+            trumpSuit={bidData.trumpSuit}
             bookInfo={log}
           />
         </div>
       )}
       {stage === "Play" && bookNum === 2 && (
         <div>
-          <BidInfo bidData={bidData} suit={trumpSuit} book={bookNum} />
-          <Hand deckUrl={deckUrl} player={player} stage={stage} />
+          <BidInfo bidData={bidData} suit={bidData.trumpSuit} book={bookNum} />
           <Play
             deckUrl={deckUrl}
             player={player}
             order={roundOrder}
             sendBookInfo={setBookInfo}
             book={bookNum}
-            trumpSuit={trumpSuit}
+            trumpSuit={bidData.trumpSuit}
             bookInfo={log}
           />
         </div>
       )}
       {stage === "Play" && bookNum === 3 && (
         <div>
-          <BidInfo bidData={bidData} suit={trumpSuit} book={bookNum} />
-          <Hand deckUrl={deckUrl} player={player} stage={stage} />
+          <BidInfo bidData={bidData} suit={bidData.trumpSuit} book={bookNum} />
           <Play
             deckUrl={deckUrl}
             player={player}
             order={roundOrder}
             sendBookInfo={setBookInfo}
             book={bookNum}
-            trumpSuit={trumpSuit}
+            trumpSuit={bidData.trumpSuit}
             bookInfo={log}
           />
         </div>
       )}
       {stage === "Play" && bookNum === 4 && (
         <div>
-          <BidInfo bidData={bidData} suit={trumpSuit} book={bookNum} />
-          <Hand deckUrl={deckUrl} player={player} stage={stage} />
+          <BidInfo bidData={bidData} suit={bidData.trumpSuit} book={bookNum} />
+
           <Play
             deckUrl={deckUrl}
             player={player}
             order={roundOrder}
             sendBookInfo={setBookInfo}
             book={bookNum}
-            trumpSuit={trumpSuit}
+            trumpSuit={bidData.trumpSuit}
             bookInfo={log}
           />
         </div>
@@ -237,35 +229,27 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
 
       {stage === "Play" && bookNum === 5 && (
         <div>
-          <BidInfo bidData={bidData} suit={trumpSuit} book={bookNum} />
-          <Hand deckUrl={deckUrl} player={player} stage={stage} />
+          <BidInfo bidData={bidData} suit={bidData.trumpSuit} book={bookNum} />
+
           <Play
             deckUrl={deckUrl}
             player={player}
             order={roundOrder}
             sendBookInfo={setBookInfo}
             book={bookNum}
-            trumpSuit={trumpSuit}
+            trumpSuit={bidData.trumpSuit}
             bookInfo={log}
           />
         </div>
       )}
 
       {stage === "Winner" && (
-        <div>
-          <BidInfo bidData={bidData} suit={trumpSuit} book={bookNum} />
-          <div>Round Over! </div>
-          <div>Team 1: {team1BookCount}</div>
-          <div>Team 2: {team2BookCount}</div>
-          <button
-            onClick={() => {
-              sendRoundScore([team1BookCount, team2BookCount]);
-              setStage("Over");
-            }}
-          >
-            Next Round
-          </button>
-        </div>
+        <PlayWinner
+          team1={team1BookCount}
+          team2={team2BookCount}
+          sendRoundScore={sendRoundScore}
+          sendStage={setStage}
+        />
       )}
     </div>
   );

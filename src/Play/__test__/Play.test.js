@@ -4,11 +4,11 @@ import { render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
 test("find player in first postion", ()=> {
-    let num = checkPlayerPosition("player1",["player2","player3","player4","player1"])
+    let num = checkPlayerPosition("You",["Mario","Partner","Luigi","You"])
     expect(num).toBe(4)
 })
 
 test("find player in 2nd postion", ()=> {
-    let num = checkPlayerPosition("player1",["player4","player1","player2","player3"])
+    let num = checkPlayerPosition("You",["Luigi","You","Mario","Partner"])
     expect(num).toBe(2)
 })

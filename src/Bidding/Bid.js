@@ -7,7 +7,7 @@
 //     const [highBid, setHighBid] = useState("");
 //     const [highBidder, setHighBidder] = useState("");
 
-//     const player = "player1";
+//     const player = "You";
     
 //     var isDealer = (player === dealer)
 //     useEffect(() => {

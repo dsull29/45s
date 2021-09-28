@@ -66,13 +66,13 @@ export function getRoundOrder(round) {
   let val = (round - 1) % 4;
   let order;
   if (val === 0) {
-    order = ["player2", "player3", "player4", "player1"];
+    order = ["Mario", "Partner", "Luigi", "You"];
   } else if (val === 1) {
-    order = ["player3", "player4", "player1", "player2"];
+    order = ["Partner", "Luigi", "You", "Mario"];
   } else if (val === 2) {
-    order = ["player4", "player1", "player2", "player3"];
+    order = ["Luigi", "You", "Mario", "Partner"];
   } else if (val === 3) {
-    order = ["player1", "player2", "player3", "player4"];
+    order = ["You", "Mario", "Partner", "Luigi"];
   }
   return order;
 } // module.exports = { dealHand, asyncCall};
@@ -88,14 +88,14 @@ export function getBookOrder(mung, roundOrder) {
   if (lastBook) {
     lastWinner = lastBook.winningPlayer;
   }
-  if (lastWinner === "player2") {
-    order = ["player2", "player3", "player4", "player1"];
-  } else if (lastWinner === "player3") {
-    order = ["player3", "player4", "player1", "player2"];
-  } else if (lastWinner === "player4") {
-    order = ["player4", "player1", "player2", "player3"];
-  } else if (lastWinner === "player1") {
-    order = ["player1", "player2", "player3", "player4"];
+  if (lastWinner === "Mario") {
+    order = ["Mario", "Partner", "Luigi", "You"];
+  } else if (lastWinner === "Partner") {
+    order = ["Partner", "Luigi", "You", "Mario"];
+  } else if (lastWinner === "Luigi") {
+    order = ["Luigi", "You", "Mario", "Partner"];
+  } else if (lastWinner === "You") {
+    order = ["You", "Mario", "Partner", "Luigi"];
   } else {
     order = roundOrder;
   }

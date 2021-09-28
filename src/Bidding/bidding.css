@@ -1,0 +1,21 @@
+.highbid {
+  color: green;
+  text-align: center;
+  width: auto;
+  padding: 5%;
+}
+
+.bidstripe {
+    background-color: transparent;
+    justify-content: center;
+    margin: 0% 30%;
+}
+
+.bidinfo {
+  flex: 1;
+  background-color: #fec24d;
+  text-align: center;
+  border: 4px groove #003764;
+  border-top: 0px;
+}
+

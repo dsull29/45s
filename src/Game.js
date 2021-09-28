@@ -2,8 +2,6 @@ import { useState } from "react";
 import Score from "./Score/Score";
 import Round from "./Round";
 import useFetch from "./useFetch";
-import { getFreshDeck } from "./deckFuncs";
-import Footer from "./Footer/Footer";
 
 const Game = () => {
   const { data, isPending, error } = useFetch(
@@ -41,7 +39,7 @@ const Game = () => {
   }
 
   return (
-    <div>
+    <div className="gamewindow">
       {isPending && <div>Setting up...</div>}
       {error && <div>{error}</div>}
       {deckUrl && !gameOver && (
@@ -53,7 +51,6 @@ const Game = () => {
             sendRoundScore={setRoundScore}
             newRound={true}
           />
-          <Footer />
         </div>
       )}
       {gameOver && (

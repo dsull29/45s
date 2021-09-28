@@ -5,7 +5,7 @@ import { getBid } from "./bidfuncs";
 
 const MakeBid = ({ deckUrl, bidder, bidData, dealer, sendBid }) => {
   const [playerBid, setPlayerBid] = useState("Pass");
-  const player = "player1";
+  const player = "You";
   const url = deckUrl + "/pile/" + bidder + "/list/";
   const { data, error, isPending } = useFetch(url);
 
@@ -38,7 +38,7 @@ const MakeBid = ({ deckUrl, bidder, bidData, dealer, sendBid }) => {
   }
 
   return (
-    <div className="bid">
+    <div className="playeraction">
       {humanBidder && (
         <div>
           <form onSubmit={handleSubmit}>

@@ -16,9 +16,9 @@ test.skip("player 3 bids 20 in clubs", () => {
     ["9C", "8S", "4D", "QH", "7H"],
     ["6H", "2D", "3D", "6H", "Q3"],
   ];
-  const bidders = ["player2", "player3", "player4", "player1"];
+  const bidders = ["Mario", "Partner", "Luigi", "You"];
   const { highBid, highBidder, bidderSuit } = bidding(cards, bidders);
   expect(highBid).toBe("20");
-  expect(highBidder).toBe("player3");
+  expect(highBidder).toBe("Partner");
   expect(bidderSuit).toBe("Clubs");
 });

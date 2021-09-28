@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { evaluateHand } from "../cardValues";
+import Hand from "../Hand";
 import useFetch from "../useFetch";
 import { getBestSuit } from "./bidfuncs";
+import "../Play/play.css";
 
 const SelectSuit = ({ deckUrl, bidData, sendTrumpSuit }) => {
     const [trumpSuit, setTrumpSuit] = useState("Hearts");
@@ -9,8 +11,8 @@ const SelectSuit = ({ deckUrl, bidData, sendTrumpSuit }) => {
     const url = deckUrl + "/pile/" + bidder + "/list/";
     const { data, error, isPending } = useFetch(url);
 
-    const player = "player1";
-
+    const player = "You";
+    console.log("bid",bidder,bidData)
     let humanBidder;
     if (data) {
         if (bidder === player) {
@@ -34,16 +36,13 @@ const SelectSuit = ({ deckUrl, bidData, sendTrumpSuit }) => {
         sendTrumpSuit(trumpSuit)
     };
 
-
-
-
     return (
         <div>
-            {bidData.highBidder === "player1" &&
-                <div>
-                    <form onSubmit={handleSuitSubmit}>
+            {bidData.highBidder === "You" && (
+            <div className="playeraction">
+               <form onSubmit={handleSuitSubmit}>
                         <select
-                            value={trumpSuit}
+                         value={trumpSuit}
                             onChange={(e) => setTrumpSuit(e.target.value)}>
                             <option value="Hearts">Hearts</option>
                             <option value="Diamonds">Diamonds</option>
@@ -52,7 +51,8 @@ const SelectSuit = ({ deckUrl, bidData, sendTrumpSuit }) => {
                         </select>
                         <button>Select Suit</button>
                     </form>
-                </div>}
+                </div>
+                )}
         </div>)
 }
 

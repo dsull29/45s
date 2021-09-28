@@ -1,0 +1,19 @@
+.header {
+  background-color: #003764;
+  padding-bottom: 4px;
+  border-bottom: 2px solid ;
+  text-align: center;
+  margin: 2% 30%;
+}
+
+.maintitle {
+  color:#fec24d;
+  font-weight: bolder;
+  font-size: xx-large;
+}
+
+.tagline {
+
+  font-size: small;
+  color:#fec24d;
+}

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { getNewCards } from "../deckFuncs";
+import Hand from "../Hand";
 import useFetch from "../useFetch";
+import "./drawing.css";
 
 const Draw = ({ deckUrl, drawer, trumpSuit, sendDraw }) => {
   const [discard0, setDiscard0] = useState(false);
@@ -25,40 +27,59 @@ const Draw = ({ deckUrl, drawer, trumpSuit, sendDraw }) => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <Hand deckUrl={deckUrl} player={drawer} />
+      <div className="handwindow">
       <div className="discardHand">
+        <div className="discardbox">
         <input
           type="checkbox"
           name="card0"
           onChange={(e) => setDiscard0(e.target.checked)}
           checked={discard0}
-          className="dischardCheckBox"
         ></input>
+        </div>
+        <div className="discardbox">
+
         <input
           type="checkbox"
           name="card1"
           onChange={(e) => setDiscard1(e.target.checked)}
           checked={discard1}
         ></input>
+        </div>
+        <div className="discardbox">
+
         <input
           type="checkbox"
           name="card2"
-          onClick={(e) => setDiscard2(e.target.checked)}
+          onChange={(e) => setDiscard2(e.target.checked)}
           checked={discard2}
         ></input>
+        </div>
+        <div className="discardbox">
+
         <input
           type="checkbox"
           name="card3"
           onChange={(e) => setDiscard3(e.target.checked)}
           checked={discard3}
         ></input>
+        </div>
+        <div className="discardbox">
+
         <input
           type="checkbox"
           name="card4"
           onChange={(e) => setDiscard4(e.target.checked)}
           checked={discard4}
         ></input>
+        </div>
+      </div>
+      <div className = "playeraction">
+      </div>
       </div>
       <button>Discard Selected</button>
+
     </form>
   );
 };

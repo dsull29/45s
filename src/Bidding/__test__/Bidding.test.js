@@ -10,10 +10,10 @@ test.skip("return null when bidder passes", () => {
     isPending: false,
     error: null,
   });
-  const bidOrder = ["player2", "player3", "player4", "player5"];
+  const bidOrder = ["Mario", "Partner", "Luigi", "player5"];
   const { getByTestId } = render(<Bidding bidOrder={bidOrder} />);
   const firstBidderEl = getByTestId("firstBidder");
-  expect(firstBidderEl.textContent).toBe("player2 to make first bid.");
+  expect(firstBidderEl.textContent).toBe("Mario to make first bid.");
 });
 
 let mockResponse = {
@@ -21,7 +21,7 @@ let mockResponse = {
   deck_id: "y70syhgp11kv",
   remaining: 32,
   piles: {
-    player1: {
+    You: {
       remaining: 5,
       cards: [
         {
@@ -41,13 +41,13 @@ let mockResponse = {
         },
       ],
     },
-    player2: {
+    Mario: {
       remaining: 5,
     },
-    player3: {
+    Partner: {
       remaining: 5,
     },
-    player4: {
+    Luigi: {
       remaining: 5,
     },
   },

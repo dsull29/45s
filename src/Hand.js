@@ -15,7 +15,7 @@ const Hand = ({ deckUrl, player, round }) => {
       {error && <div>{error}</div>}
       {isPending && <div>Loading...</div>}
       {data && cards && (
-        <div>
+        <div className="handwindow">
           <div className="hand">
             {cards[0] && <Card card={cards[0]} round={round} />}
             {cards[1] && <Card card={cards[1]} round={round} />}
