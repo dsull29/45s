@@ -83,8 +83,8 @@ const Bidding = ({ deckUrl, bidOrder, sendBidData }) => {
     }
     case 5: {
       if (trumpSuit) {
-        let highBid  = bidData.highBid
-        let highBidder = bidData.highBidder
+        let highBid = bidData.highBid;
+        let highBidder = bidData.highBidder;
         setBidData({ highBid, highBidder, trumpSuit });
         setTurn(6);
       }
@@ -130,14 +130,14 @@ const Bidding = ({ deckUrl, bidOrder, sendBidData }) => {
         <div className="playboardrow">
           <div className="playboardbox"></div>
           <div className="playboardbox">
-            <ViewBid bid={getPlayerBid("You", bidOrder)} bidder="You"/>
+            <ViewBid bid={getPlayerBid("You", bidOrder)} bidder="You" />
           </div>
           <div className="playboardbox"></div>
         </div>
       </div>
 
       <div className="playerwindow">
-        <Hand deckUrl={deckUrl} player={bidder} />
+        <Hand deckUrl={deckUrl} player={"You"} />
         {turn === 1 && (
           <MakeBid
             deckUrl={deckUrl}

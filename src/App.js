@@ -12,7 +12,9 @@ function App() {
       <Header />
       {inGame === false && (
         <div className="gamewindow">
-          <button className="startbutton" onClick={() => setInGame(true)}>Start Game</button>
+          <button className="startbutton" onClick={() => setInGame(true)}>
+            Start Game
+          </button>
         </div>
       )}
       {inGame && <Game />}

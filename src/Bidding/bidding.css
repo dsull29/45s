@@ -6,9 +6,9 @@
 }
 
 .bidstripe {
-    background-color: transparent;
-    justify-content: center;
-    margin: 0% 30%;
+  background-color: transparent;
+  justify-content: center;
+  margin: 0% 30%;
 }
 
 .bidinfo {
@@ -18,4 +18,3 @@
   border: 4px groove #003764;
   border-top: 0px;
 }
-

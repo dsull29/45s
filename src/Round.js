@@ -1,20 +1,15 @@
 import { useEffect, useState } from "react";
-import Hand from "./Hand";
 import { dealHands } from "./deckFuncs";
-import SelectSuit from "./Bidding/SelectSuit";
-import BidInfo from "./Bidding/BidInfo";
-import Play from "./Play/Play";
 import { getCardValue } from "./cardValues";
 import Bidding from "./Bidding/Bidding";
+import Play from "./Play/Play";
 import Drawing from "./Drawing/Drawing";
 import PlayWinner from "./Play/PlayWinner";
 
 const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
-  const [hands, setHands] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [bidData, setBidData] = useState("");
   const [stage, setStage] = useState("Deal");
-  // const [trumpSuit, setTrumpSuit] = useState("");
   const [discardData, setDiscardData] = useState(false);
   const [bookInfo, setBookInfo] = useState(null);
   const [bookNum, setBookNum] = useState(1);
@@ -25,11 +20,9 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
 
   // TODO look into a way to reset states without having todo this...
   if (newRound && stage === "Over") {
-    setHands(null);
     setIsPending(true);
     setBidData("");
     setStage("Deal");
-    // setTrumpSuit("");
     setDiscardData(false);
     setBookInfo(null);
     setBookNum(1);
@@ -39,11 +32,9 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
   }
 
   const player = "You";
-  const dealer = order[(round - 1) % 4];
 
   useEffect(() => {
-    // console.log("loopeffect",deckUrl,round)
-      dealHands(deckUrl, round, setIsPending, setHands, setRoundOrder);
+    dealHands(deckUrl, round, setIsPending, setRoundOrder);
   }, [deckUrl, round]);
 
   if (deckUrl && stage === "Deal" && !isPending) {
@@ -137,9 +128,10 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
 
   return (
     <div className="content">
-      {stage === "Deal" && isPending && <div>Dealing....</div>}
-      {/* {console.log("bida", stage, hands)} */}
-      {stage === "Bid" && hands && roundOrder && (
+      {stage === "Deal" && isPending && (
+        <div className="gamewindow loading">Dealing....</div>
+      )}
+      {stage === "Bid" && roundOrder && (
         <div>
           <Bidding
             deckUrl={deckUrl}
@@ -148,97 +140,79 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
           />
         </div>
       )}
-      {/* {stage === "SuitSelect" && (
-        <div>
-          <BidInfo bidData={bidData} />
-          <SelectSuit
-            deckUrl={deckUrl}
-            bidData={bidData}
-            sendTrumpSuit={setTrumpSuit}
-          />
-        </div>
-      )} */}
       {stage === "Discard" && (
         <div>
-          <BidInfo bidData={bidData} suit={bidData.trumpSuit} />
           <Drawing
             deckUrl={deckUrl}
             roundOrder={roundOrder}
-            trumpSuit={bidData.trumpSuit}
+            bidData={bidData}
             sendDiscardData={setDiscardData}
           />
         </div>
       )}
       {stage === "Play" && bookNum === 1 && (
         <div>
-          <BidInfo bidData={bidData} suit={bidData.trumpSuit} book={bookNum} />
           <Play
             deckUrl={deckUrl}
             player={player}
             order={roundOrder}
             sendBookInfo={setBookInfo}
             book={bookNum}
-            trumpSuit={bidData.trumpSuit}
             bookInfo={log}
+            bidData={bidData}
           />
         </div>
       )}
       {stage === "Play" && bookNum === 2 && (
         <div>
-          <BidInfo bidData={bidData} suit={bidData.trumpSuit} book={bookNum} />
           <Play
             deckUrl={deckUrl}
             player={player}
             order={roundOrder}
             sendBookInfo={setBookInfo}
             book={bookNum}
-            trumpSuit={bidData.trumpSuit}
             bookInfo={log}
+            bidData={bidData}
           />
         </div>
       )}
       {stage === "Play" && bookNum === 3 && (
         <div>
-          <BidInfo bidData={bidData} suit={bidData.trumpSuit} book={bookNum} />
           <Play
             deckUrl={deckUrl}
             player={player}
             order={roundOrder}
             sendBookInfo={setBookInfo}
             book={bookNum}
-            trumpSuit={bidData.trumpSuit}
             bookInfo={log}
+            bidData={bidData}
           />
         </div>
       )}
       {stage === "Play" && bookNum === 4 && (
         <div>
-          <BidInfo bidData={bidData} suit={bidData.trumpSuit} book={bookNum} />
-
           <Play
             deckUrl={deckUrl}
             player={player}
             order={roundOrder}
             sendBookInfo={setBookInfo}
             book={bookNum}
-            trumpSuit={bidData.trumpSuit}
             bookInfo={log}
+            bidData={bidData}
           />
         </div>
       )}
 
       {stage === "Play" && bookNum === 5 && (
         <div>
-          <BidInfo bidData={bidData} suit={bidData.trumpSuit} book={bookNum} />
-
           <Play
             deckUrl={deckUrl}
             player={player}
             order={roundOrder}
             sendBookInfo={setBookInfo}
             book={bookNum}
-            trumpSuit={bidData.trumpSuit}
             bookInfo={log}
+            bidData={bidData}
           />
         </div>
       )}

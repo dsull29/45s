@@ -1,11 +1,11 @@
 .footer {
-    display: flex;
-    padding: .2rem;
-    text-align: center;
-    background-color: whitesmoke;
-    font-size: .75rem;
+  display: flex;
+  padding: 0.2rem;
+  text-align: center;
+  background-color: whitesmoke;
+  font-size: 0.75rem;
 }
 
 .footeritem {
-    flex: 1;
+  flex: 1;
 }

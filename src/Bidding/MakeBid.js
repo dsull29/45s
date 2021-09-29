@@ -19,22 +19,28 @@ const MakeBid = ({ deckUrl, bidder, bidData, dealer, sendBid }) => {
       humanBidder = false;
       let cards = data.piles[bidder].cards;
       let card;
-      let cardCodes = []
+      let cardCodes = [];
       for (card of cards) {
-          cardCodes.push(card.code)
+        cardCodes.push(card.code);
       }
       let handValues = evaluateHand(cardCodes);
-      let playerBid = getBid(handValues,bidData);
-      let bidYooo = {bidder,playerBid}
-      sendBid(bidYooo)
+      let playerBid = getBid(handValues, bidData);
+      let bidYooo = { bidder, playerBid };
+      sendBid(bidYooo);
     }
   }
 
   let isDealer = player === dealer;
-  
+
   const handleSubmit = () => {
-      sendBid({"bidder": bidder,
-               playerBid })
+    sendBid({ bidder: bidder, playerBid });
+  };
+
+  function checkBidOptions(bidChoice, highBid) {
+    let bidOptions = ["Pass", "15", "20", "25", "30", "30No"];
+    let highBidNumber = bidOptions.indexOf(highBid);
+    let bidNumber = bidOptions.indexOf(bidChoice);
+    return highBidNumber < bidNumber;
   }
 
   return (
@@ -46,14 +52,18 @@ const MakeBid = ({ deckUrl, bidder, bidData, dealer, sendBid }) => {
               value={playerBid}
               onChange={(e) => setPlayerBid(e.target.value)}
             >
-              {isDealer && <option value="Take">Take</option>}
-              <option value="Pass">Pass</option>
-{/* TODO bidOptions need to be better */}
-              {highBid === null && <option value="15">15</option>}
-              {highBid === "15" && <option value="20">20</option>}
-              <option value="25">25</option>
-              <option value="30">30</option>
-              <option value="30No">30 No Draw</option>
+              {isDealer && highBid && <option value="Take">Take</option>}
+              {isDealer && highBid && (
+                <option value="Pass">Let Bidder Have It</option>
+              )}
+              {!isDealer && <option value="Pass">Pass</option>}
+              {checkBidOptions("15", highBid) && <option value="15">15</option>}
+              {checkBidOptions("20", highBid) && <option value="20">20</option>}
+              {checkBidOptions("25", highBid) && <option value="25">25</option>}
+              {checkBidOptions("30", highBid) && <option value="30">30</option>}
+              {checkBidOptions("30No", highBid) && (
+                <option value="30No">30 No Draw</option>
+              )}
             </select>
             <button>Place Bid</button>
           </form>

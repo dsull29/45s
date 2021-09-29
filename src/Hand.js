@@ -17,11 +17,11 @@ const Hand = ({ deckUrl, player, round }) => {
       {data && cards && (
         <div className="handwindow">
           <div className="hand">
-            {cards[0] && <Card card={cards[0]} round={round} />}
-            {cards[1] && <Card card={cards[1]} round={round} />}
-            {cards[2] && <Card card={cards[2]} round={round} />}
-            {cards[3] && <Card card={cards[3]} round={round} />}
-            {cards[4] && <Card card={cards[4]} round={round} />}
+            <Card card={cards[0]} round={round} />
+            <Card card={cards[1]} round={round} />
+            <Card card={cards[2]} round={round} />
+            <Card card={cards[3]} round={round} />
+            <Card card={cards[4]} round={round} />
           </div>
         </div>
       )}

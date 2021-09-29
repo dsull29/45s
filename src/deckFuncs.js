@@ -1,10 +1,4 @@
-export async function dealHands(
-  deckUrl,
-  round,
-  setIsPending,
-  setHands,
-  setRoundOrder
-) {
+export async function dealHands(deckUrl, round, setIsPending, setRoundOrder) {
   const order = getRoundOrder(round);
   await fetch(deckUrl + "/shuffle/");
   const drawresponse = await fetch(deckUrl + "/draw/?count=20");
@@ -25,7 +19,6 @@ export async function dealHands(
   );
   if (done) {
     setRoundOrder(order);
-    setHands(hands);
     setIsPending(false);
   }
 }
@@ -133,12 +126,16 @@ export async function getNewCards(
   sendDiscardData,
   sendDiscardPending
 ) {
-  const discardResponse = await fetch(deckUrl + "/pile/discard/add/?cards=" + discardCodes.toString())
-  await discardResponse.json()
+  const discardResponse = await fetch(
+    deckUrl + "/pile/discard/add/?cards=" + discardCodes.toString()
+  );
+  await discardResponse.json();
   //  const redrawCount = 5 - discardData.piles[player].remaining;
-  const redrawResponse = await fetch(deckUrl + "/draw/?count=" + discardCodes.length);
+  const redrawResponse = await fetch(
+    deckUrl + "/draw/?count=" + discardCodes.length
+  );
   const redrawData = await redrawResponse.json();
-  console.log("redraw", player, discardCodes,redrawData.cards);
+  console.log("redraw", player, discardCodes, redrawData.cards);
   let cards = [];
   if (redrawData.cards) {
     for (let i = 0; i < redrawData.cards.length; i++)
@@ -146,10 +143,10 @@ export async function getNewCards(
   }
   const assResponse = await fetch(
     deckUrl + "/pile/" + player + "/add/?cards=" + cards.toString()
-  )
+  );
   const done = await assResponse.json();
   if (done) {
-    sendDiscardData(discardCodes.length)
-    sendDiscardPending(false)
+    sendDiscardData(discardCodes.length);
+    sendDiscardPending(false);
   }
 }

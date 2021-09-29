@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import BidInfo from "../Bidding/BidInfo";
 import { checkPlayerPosition } from "../Play/Play";
 import Draw from "./Draw";
 import DrawCpu from "./DrawCpu";
+import ViewDraw from "./ViewDraw";
 
-const Drawing = ({ deckUrl, roundOrder, trumpSuit, sendDiscardData }) => {
+const Drawing = ({ deckUrl, roundOrder, bidData, sendDiscardData }) => {
   const [draw1, setDraw1] = useState("");
   const [draw2, setDraw2] = useState("");
   const [draw3, setDraw3] = useState("");
@@ -48,7 +50,7 @@ const Drawing = ({ deckUrl, roundOrder, trumpSuit, sendDiscardData }) => {
         <Draw
           deckUrl={deckUrl}
           drawer={drawer}
-          trumpSuit={trumpSuit}
+          trumpSuit={bidData.trumpSuit}
           sendDraw={sendDraw}
         />
       );
@@ -57,37 +59,60 @@ const Drawing = ({ deckUrl, roundOrder, trumpSuit, sendDiscardData }) => {
         <DrawCpu
           deckUrl={deckUrl}
           drawer={drawer}
-          trumpSuit={trumpSuit}
+          trumpSuit={bidData.trumpSuit}
           sendDraw={sendDraw}
         />
       );
     }
   }
 
+  const draws = [draw1, draw2, draw3, draw4];
+
+  function getPlayerDraw(player, order) {
+    let num = order.indexOf(player);
+    return draws[num];
+  }
+
   return (
     <div>
-      <div className="biddingwindow">
-        <div className="windowheader">Drawing...</div>
-        {draw1 && (
-          <div className="bid">
-            {roundOrder[0]} draws {draw1}
+      <div className="playboard">
+        <div className="playboardrow">
+          <div className="playboardbox"></div>
+
+          <div className="playboardbox">
+            <ViewDraw
+              draw={getPlayerDraw("Partner", roundOrder)}
+              drawer="Partner"
+            />
           </div>
-        )}
-        {draw2 && (
-          <div className="bid">
-            {roundOrder[1]} draws {draw2}
+          <div className="playboardbox"></div>
+        </div>
+
+        <div className="playboardrow">
+          <div className="playboardbox">
+            <ViewDraw
+              draw={getPlayerDraw("Mario", roundOrder)}
+              drawer="Mario"
+            />
           </div>
-        )}
-        {draw3 && (
-          <div className="bid">
-            {roundOrder[2]} draws {draw3}
+          <div className="playboardbox"></div>
+          <div className="playboardbox">
+            <ViewDraw
+              draw={getPlayerDraw("Luigi", roundOrder)}
+              drawer="Luigi"
+            />
           </div>
-        )}
-        {draw4 && (
-          <div className="bid">
-            {roundOrder[3]} draws {draw4}
+        </div>
+
+        <div className="playboardrow">
+          <div className="playboardboxlog">
+            <BidInfo bidData={bidData} />
           </div>
-        )}
+          <div className="playboardbox">
+            <ViewDraw draw={getPlayerDraw("You", roundOrder)} drawer="You" />
+          </div>
+          <div className="playboardbox"></div>
+        </div>
       </div>
 
       <div className="playerwindow">

@@ -7,6 +7,7 @@ import PlayerTurn from "./PlayerTurn";
 import PlayLog from "./PlayLog";
 import Turn from "./Turn";
 import "./play.css";
+import BidInfo from "../Bidding/BidInfo";
 
 const Play = ({
   deckUrl,
@@ -14,8 +15,8 @@ const Play = ({
   order,
   sendBookInfo,
   book,
-  trumpSuit,
   bookInfo,
+  bidData,
 }) => {
   const [playCard1, setPlayCard1] = useState("");
   const [playCard2, setPlayCard2] = useState("");
@@ -44,7 +45,7 @@ const Play = ({
     let curBestValue = 50;
     let winner;
     for (let i = 0; i < playedCards.length; i++) {
-      let val = getCardValue(playedCards[i].code, trumpSuit);
+      let val = getCardValue(playedCards[i].code, bidData.trumpSuit);
       if (val < curBestValue) {
         curBestValue = val;
         winner = i;
@@ -64,7 +65,7 @@ const Play = ({
           player={player}
           position={val}
           sendPlayCard={sendPlayCard}
-          trumpSuit={trumpSuit}
+          trumpSuit={bidData.trumpSuit}
           leadSuit={leadSuit}
         />
       );
@@ -75,7 +76,7 @@ const Play = ({
           player={bookOrder[val - 1]}
           position={val}
           sendPlayCard={sendPlayCard}
-          trumpSuit={trumpSuit}
+          trumpSuit={bidData.trumpSuit}
         />
       );
     }
@@ -90,15 +91,11 @@ const Play = ({
     <div>
       <div className="playboard">
         <div className="playboardrow">
-          <div className="playboardbox">
-            <div className="playboardbooknum">Book: {book || 1} </div>
-          </div>
+          <div className="playboardbox"></div>
           <div className="playboardbox player3">
             <PlayCard card={getPlayerCard("Partner", bookOrder)} />
           </div>
-          <div className="playboardbox">
-            <PlayLog bookInfo={bookInfo} />
-          </div>
+          <div className="playboardbox"></div>
         </div>
 
         <div className="playboardrow">
@@ -112,11 +109,15 @@ const Play = ({
         </div>
 
         <div className="playboardrow">
-          <div className="playboardbox"></div>
+          <div className="playboardboxlog">
+            <BidInfo bidData={bidData} />
+          </div>
           <div className="playboardbox player1">
             <PlayCard card={getPlayerCard("You", bookOrder)} />
           </div>
-          <div className="playboardbox"></div>
+          <div className="playboardboxlog">
+            <PlayLog bookInfo={bookInfo} />
+          </div>
         </div>
       </div>
 

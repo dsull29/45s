@@ -5,21 +5,14 @@ import "./bidding.css";
  * @param  {String} suit} Trump suit
  * @param  {Int}
  */
-const BidInfo = ({ bidData, suit, book }) => {
-  var bid = bidData.highBid;
-  var bidder = bidData.highBidder;
-
+const BidInfo = ({ bidData }) => {
   return (
-    <div className="bidstripe">
-        {!suit && (
-          <div className="bidinfo">{bid + " from " + bidder + " in..."}</div>
-        )}
-        {suit && (
-          <div className="bidinfo">
-            {bid + " from " + bidder + " in " + suit}
-          </div>
-        )}
-      </div>
+    <div className="playboardlog">
+      <div className="playboardlogheader">Bid Info</div>
+      <div className="playboardlogentry">Bid: {bidData.highBid} </div>
+      <div className="playboardlogentry">Bidder: {bidData.highBidder}</div>
+      <div className="playboardlogentry">Suit: {bidData.trumpSuit}</div>
+    </div>
   );
 };
 

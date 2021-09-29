@@ -40,8 +40,8 @@ const Game = () => {
 
   return (
     <div className="gamewindow">
-      {isPending && <div>Setting up...</div>}
-      {error && <div>{error}</div>}
+      {isPending && <div className="gamewindow loading">Setting up...</div>}
+      {error && <div className="gamewindow loading">{error}</div>}
       {deckUrl && !gameOver && (
         <div className="game">
           <Score round={round} gameScore={gameScore} />
