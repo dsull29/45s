@@ -1,6 +1,11 @@
 .footer {
-    margin:100px;
-    padding: 50px;
+    display: flex;
+    padding: .2rem;
     text-align: center;
     background-color: whitesmoke;
+    font-size: .75rem;
+}
+
+.footeritem {
+    flex: 1;
 }

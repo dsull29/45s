@@ -1,20 +1,16 @@
 .scoreBoard {
     display: flex;
-    /* flex-direction: column; */
     background-color: whitesmoke;
     width: auto;
-    /* border-radius: 10%; */
     justify-content: center;
-    /* margint: 2%; */
-    border-bottom: 2px solid #003764;
-    /* margin-top: 10px;
-    margin-bottom: 10px; */
-    padding-bottom: 5px;
+    border-bottom: .25rem groove #fec24d;
+    padding-bottom: .05rem;
 
 }
 
 .scoreBoardItem {
     flex: 1;
-    padding: 5px;
+    padding: .05rem;
     text-align: center;
+    font-size: .75rem;
 }

@@ -1,4 +1,6 @@
 body {
+  align-self: center;
+  width: auto;
   background-color: darkslategrey;
   margin: 0;
   justify-content: center;
@@ -11,8 +13,6 @@ body {
 }
 
 .gamewindow {
-  /* max-width: auto; */
-  /* max-height: 800px; */
   text-align: center;
   background-color: darkgreen;
 
@@ -31,14 +31,14 @@ code {
 .handwindow {
   display: flex;
   flex-direction: column;
-  margin: .5rem 5rem;
+  margin: .5rem .5rem;
   align-items: center;
   justify-content: center;
 }
 
 
 .hand {
-  margin: 0;
+  margin: 0px;
   flex: 1;
   display: flex;
   justify-content: center;
@@ -141,7 +141,7 @@ code {
   background-color: #003764;
   text-align: center;
   font-weight: bolder;
-  font-size: 20;
+  font-size: 1.25rem;
   color: #fec24d;
   padding: .25rem;
   border-radius: .5rem .5rem 0rem 0rem;
@@ -153,7 +153,7 @@ code {
   border-bottom: 1px solid #003764;
   padding: 1% 5%;
   font-weight: small;
-  font-size: 12px;
+  font-size: .75rem;
   text-align: left;
 }
 
@@ -161,18 +161,20 @@ code {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  
+ 
 }
 
 .playermessageboxheader {
   flex: 1;
   background-color: #003764;
   color: #fec24d;
-  
-}
+  font-size: .8rem;
+  font-weight: bold;
+  }
 
 .playermessageboxtext {
   flex:1;
   background-color: whitesmoke;
+  font-size: .8rem;
 
 }

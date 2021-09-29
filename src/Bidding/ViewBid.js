@@ -1,4 +1,4 @@
-const ViewBid = ({ bid }) => {
+const ViewBid = ({ bid, bidder }) => {
   console.log("ViewBid", bid);
 
   return (
@@ -8,7 +8,13 @@ const ViewBid = ({ bid }) => {
           <div className="playermessageboxheader">{bid.bidder}</div>
           <div className="playermessageboxtext">{bid.playerBid || "Pass"}</div>
         </div>}
-      {!bid &&
+      {!bid && bidder !== "You" &&
+      <div>
+        <div className="playermessageboxheader">{bidder}</div>
+        <div className="playermessageboxtext">Thinking...</div>
+        </div>
+      }
+      {!bid && bidder==="You" &&
         <div>
         <div className="playermessageboxheader">You</div>
         <div className="playermessageboxtext">We're waiting!</div>

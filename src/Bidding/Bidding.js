@@ -110,7 +110,7 @@ const Bidding = ({ deckUrl, bidOrder, sendBidData }) => {
         <div className="playboardrow">
           <div className="playboardbox"></div>
           <div className="playboardbox">
-            <ViewBid bid={getPlayerBid("Partner", bidOrder)} />
+            <ViewBid bid={getPlayerBid("Partner", bidOrder)} bidder="Partner" />
           </div>
           <div className="playboardbox">
             {/* <ViewBidLog bids={bids} bidOrder={bidOrder} bidData={bidData} /> */}
@@ -119,18 +119,18 @@ const Bidding = ({ deckUrl, bidOrder, sendBidData }) => {
 
         <div className="playboardrow">
           <div className="playboardbox">
-            <ViewBid bid={getPlayerBid("Mario", bidOrder)} />
+            <ViewBid bid={getPlayerBid("Mario", bidOrder)} bidder="Mario" />
           </div>
           <div className="playboardbox"></div>
           <div className="playboardbox">
-            <ViewBid bid={getPlayerBid("Luigi", bidOrder)} />
+            <ViewBid bid={getPlayerBid("Luigi", bidOrder)} bidder="Luigi" />
           </div>
         </div>
 
         <div className="playboardrow">
           <div className="playboardbox"></div>
           <div className="playboardbox">
-            <ViewBid bid={getPlayerBid("You", bidOrder)} />
+            <ViewBid bid={getPlayerBid("You", bidOrder)} bidder="You"/>
           </div>
           <div className="playboardbox"></div>
         </div>
