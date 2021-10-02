@@ -20,7 +20,7 @@ export const checkBid = (bid, bidData) => {
  *                           highBidder: player who made the highest bid}
  * @returns player's bid
  */
-export function getBid(handValues, bidData) {
+export function getBid(handValues, bidData, isDealer) {
   const bidOptions = ["Pass", "15", "20", "25", "30", "30 No Draw"];
   var bestHandVal = handValues.sort((a, b) => {
     return a - b;
@@ -28,15 +28,17 @@ export function getBid(handValues, bidData) {
   var playerBid = null;
 
   // the lower the hand value the better, which makes the comparators the floor
-  // TODO add 25 and 30 options
-  // TODO add forced 15s when a player is holding a 5 and no bids are in yet
   // TODO this bid thresholds are abirtrary. try to get a better handle on what
   //   these look like
   // TODO needs an exception where if the player is dealer they can take the bid
 
-  if (bestHandVal < 0 - 25) {
+  if (bestHandVal < 0 - 80) {
+    playerBid = "30";
+  } else if (bestHandVal < 0 - 60) {
+    playerBid = "25";
+  } else if (bestHandVal < 0 - 45) {
     playerBid = "20";
-  } else if (bestHandVal < 0 - 5) {
+  } else if (bestHandVal < 0 - 34) {
     playerBid = "15";
   }
 
@@ -44,7 +46,11 @@ export function getBid(handValues, bidData) {
     playerBid &&
     bidOptions.indexOf(playerBid) <= bidOptions.indexOf(bidData.highBid)
   ) {
-    playerBid = "Pass";
+    if (isDealer) {
+      playerBid = "Take";
+    } else {
+      playerBid = "Pass";
+    }
   }
 
   return playerBid;

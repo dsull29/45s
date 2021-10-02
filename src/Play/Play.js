@@ -2,9 +2,7 @@ import { useState } from "react";
 import { getCardValue } from "../cardValues";
 import { getBookOrder } from "../deckFuncs";
 import Hand from "../Hand";
-import PlayCard from "./PlayCard";
 import PlayerTurn from "./PlayerTurn";
-import PlayLog from "./PlayLog";
 import Turn from "./Turn";
 import "./play.css";
 import BidInfo from "../Bidding/BidInfo";
@@ -46,7 +44,7 @@ const Play = ({
     let curBestValue = 50;
     let winner;
     for (let i = 0; i < playedCards.length; i++) {
-      let val = getCardValue(playedCards[i].code, bidData.trumpSuit);
+      let val = getCardValue(playedCards[i].code, bidData.trumpSuit, leadSuit);
       if (val < curBestValue) {
         curBestValue = val;
         winner = i;
@@ -78,6 +76,7 @@ const Play = ({
           position={val}
           sendPlayCard={sendPlayCard}
           trumpSuit={bidData.trumpSuit}
+          leadSuit={leadSuit}
         />
       );
     }
@@ -89,7 +88,7 @@ const Play = ({
   }
 
   const players = ["You", "Mario", "Partner", "Luigi"];
-  function getActions(playedCards, order) {
+  function getActions(order) {
     let actions = [];
     for (let i = 0; i < players.length; i++) {
       actions[i] = getPlayerCard(players[i], order);
@@ -103,7 +102,7 @@ const Play = ({
         <ViewTable
           stage="Playing"
           players={players}
-          actions={getActions(playedCards, bookOrder)}
+          actions={getActions(bookOrder)}
           // bidData={bidData}
         />
       </div>

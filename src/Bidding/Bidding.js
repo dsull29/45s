@@ -3,8 +3,6 @@ import { checkBid } from "./bidfuncs";
 import MakeBid from "./MakeBid";
 import "./bidding.css";
 import Hand from "../Hand";
-import ViewBid from "./ViewBid";
-import ViewBidLog from "./ViewBidLog";
 import SelectSuit from "./SelectSuit";
 import ViewTable from "../ViewTable";
 
@@ -94,6 +92,9 @@ const Bidding = ({ deckUrl, bidOrder, sendBidData }) => {
 
     case 6: {
       sendBidData(bidData);
+    }
+    default: {
+      console.log("bid turn default hit")
     }
   }
 

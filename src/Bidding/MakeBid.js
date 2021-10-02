@@ -9,6 +9,8 @@ const MakeBid = ({ deckUrl, bidder, bidData, dealer, sendBid }) => {
   const url = deckUrl + "/pile/" + bidder + "/list/";
   const { data, error, isPending } = useFetch(url);
 
+  const isDealer = player === dealer;
+
   let highBid = bidData.highBid;
   let humanBidder;
 
@@ -24,13 +26,11 @@ const MakeBid = ({ deckUrl, bidder, bidData, dealer, sendBid }) => {
         cardCodes.push(card.code);
       }
       let handValues = evaluateHand(cardCodes);
-      let playerBid = getBid(handValues, bidData);
+      let playerBid = getBid(handValues, bidData,isDealer);
       let bidYooo = { bidder, playerBid };
       sendBid(bidYooo);
     }
   }
-
-  let isDealer = player === dealer;
 
   const handleSubmit = () => {
     sendBid({ bidder: bidder, playerBid });

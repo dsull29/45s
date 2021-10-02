@@ -8,12 +8,12 @@ export function getDealer(dealers) {
   return { dealer, order };
 }
 
-export function getWorstCard(cards, trump) {
+export function getWorstCard(cards, trump, lead) {
   var worstCard = null;
   var worstCardVal = 0 - 50;
 
   for (let i = 0; i < cards.length; i++) {
-    var curCardVal = getCardValue(cards[i].code, trump);
+    var curCardVal = getCardValue(cards[i].code, trump, lead);
     if (curCardVal > worstCardVal) {
       worstCardVal = curCardVal;
       worstCard = i;
@@ -22,12 +22,12 @@ export function getWorstCard(cards, trump) {
   return cards[worstCard];
 }
 
-export function getBestCard(cards, trump) {
+export function getBestCard(cards, trump, lead) {
   var bestCard = null;
   var bestCardVal = 50;
 
   for (let i = 0; i < cards.length; i++) {
-    var curCardVal = getCardValue(cards[i].code, trump);
+    var curCardVal = getCardValue(cards[i].code, trump, lead);
     if (curCardVal < bestCardVal) {
       bestCardVal = curCardVal;
       bestCard = i;
