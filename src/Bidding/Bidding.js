@@ -6,6 +6,7 @@ import Hand from "../Hand";
 import ViewBid from "./ViewBid";
 import ViewBidLog from "./ViewBidLog";
 import SelectSuit from "./SelectSuit";
+import ViewTable from "../ViewTable";
 
 const Bidding = ({ deckUrl, bidOrder, sendBidData }) => {
   const [bid1, setBid1] = useState("");
@@ -100,87 +101,76 @@ const Bidding = ({ deckUrl, bidOrder, sendBidData }) => {
 
   function getPlayerBid(player, order) {
     let num = order.indexOf(player);
-    console.log("crash", player, bids, num);
+    // console.log("crash", player, bids, num);
     return bids[num];
   }
 
+  const players = ["You", "Mario", "Partner", "Luigi"];
+  function getActions(bids, bidOrder) {
+    let actions = [];
+    for (let i = 0; i < players.length; i++) {
+      actions[i] = getPlayerBid(players[i], bidOrder);
+    }
+    return actions;
+  }
+
   return (
-    <div>
-      <div className="playboard">
-        <div className="playboardrow">
-          <div className="playboardbox"></div>
-          <div className="playboardbox">
-            <ViewBid bid={getPlayerBid("Partner", bidOrder)} bidder="Partner" />
-          </div>
-          <div className="playboardbox">
-            {/* <ViewBidLog bids={bids} bidOrder={bidOrder} bidData={bidData} /> */}
-          </div>
-        </div>
-
-        <div className="playboardrow">
-          <div className="playboardbox">
-            <ViewBid bid={getPlayerBid("Mario", bidOrder)} bidder="Mario" />
-          </div>
-          <div className="playboardbox"></div>
-          <div className="playboardbox">
-            <ViewBid bid={getPlayerBid("Luigi", bidOrder)} bidder="Luigi" />
-          </div>
-        </div>
-
-        <div className="playboardrow">
-          <div className="playboardbox"></div>
-          <div className="playboardbox">
-            <ViewBid bid={getPlayerBid("You", bidOrder)} bidder="You" />
-          </div>
-          <div className="playboardbox"></div>
-        </div>
+    <div className="game">
+      <div className="viewTableContainer">
+        <ViewTable
+          stage="Bidding"
+          players={players}
+          actions={getActions(bids, bidOrder)}
+          bidData={bidData}
+        />
       </div>
-
-      <div className="playerwindow">
-        <Hand deckUrl={deckUrl} player={"You"} />
-        {turn === 1 && (
-          <MakeBid
-            deckUrl={deckUrl}
-            bidder={bidder}
-            bidData={bidData}
-            dealer={dealer}
-            sendBid={setBid1}
-          />
-        )}
-        {turn === 2 && (
-          <MakeBid
-            deckUrl={deckUrl}
-            bidder={bidder}
-            bidData={bidData}
-            dealer={dealer}
-            sendBid={setBid2}
-          />
-        )}
-        {turn === 3 && (
-          <MakeBid
-            deckUrl={deckUrl}
-            bidder={bidder}
-            bidData={bidData}
-            dealer={dealer}
-            sendBid={setBid3}
-          />
-        )}
-        {turn === 4 && (
-          <MakeBid
-            deckUrl={deckUrl}
-            bidder={bidder}
-            bidData={bidData}
-            dealer={dealer}
-            sendBid={setBid4}
-          />
-        )}
-        {turn === 5 && (
-          <SelectSuit
-            deckUrl={deckUrl}
-            bidData={bidData}
-            sendTrumpSuit={setTrumpSuit}
-          />
-        )}
+      <div className="playerWindowContainer">
+        <div className="playerwindow">
+          <Hand deckUrl={deckUrl} player={"You"} />
+          {turn === 1 && (
+            <MakeBid
+              deckUrl={deckUrl}
+              bidder={bidder}
+              bidData={bidData}
+              dealer={dealer}
+              sendBid={setBid1}
+            />
+          )}
+          {turn === 2 && (
+            <MakeBid
+              deckUrl={deckUrl}
+              bidder={bidder}
+              bidData={bidData}
+              dealer={dealer}
+              sendBid={setBid2}
+            />
+          )}
+          {turn === 3 && (
+            <MakeBid
+              deckUrl={deckUrl}
+              bidder={bidder}
+              bidData={bidData}
+              dealer={dealer}
+              sendBid={setBid3}
+            />
+          )}
+          {turn === 4 && (
+            <MakeBid
+              deckUrl={deckUrl}
+              bidder={bidder}
+              bidData={bidData}
+              dealer={dealer}
+              sendBid={setBid4}
+            />
+          )}
+          {turn === 5 && (
+            <SelectSuit
+              deckUrl={deckUrl}
+              bidData={bidData}
+              sendTrumpSuit={setTrumpSuit}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

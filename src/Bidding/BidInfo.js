@@ -7,11 +7,11 @@ import "./bidding.css";
  */
 const BidInfo = ({ bidData }) => {
   return (
-    <div className="playboardlog">
-      <div className="playboardlogheader">Bid Info</div>
-      <div className="playboardlogentry">Bid: {bidData.highBid} </div>
-      <div className="playboardlogentry">Bidder: {bidData.highBidder}</div>
-      <div className="playboardlogentry">Suit: {bidData.trumpSuit}</div>
+    <div className="bidInfo">
+      <div className="bidInfoBox">Bid Info</div>
+      <div className="bidInfoBox">Bid: {bidData.highBid} </div>
+      <div className="bidInfoBox">Bidder: {bidData.highBidder}</div>
+      <div className="bidInfoBox">Suit: {bidData.trumpSuit}</div>
     </div>
   );
 };

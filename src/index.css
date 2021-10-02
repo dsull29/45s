@@ -1,65 +1,57 @@
 body {
   align-self: center;
   width: auto;
-  background-color: darkslategrey;
+  background-color: #2f4f4f;
   margin: 0;
   justify-content: center;
-  /* max-width: 1200px; */
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 .gamewindow {
   text-align: center;
-  background-color: darkgreen;
+  background-color: #006400;
 }
-
 .loading {
   margin: 40%;
-  color: whitesmoke;
+  color: #f5f5f5;
   height: 300px;
 }
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-
 .handwindow {
   display: flex;
   flex-direction: column;
-  margin: 0.5rem 0.5rem;
+  margin: 0.33rem 0.33rem;
   align-items: center;
   justify-content: center;
 }
-
+.discardhandwindow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 1rem;
+}
 .hand {
-  margin: 0px;
+  margin: 0;
   flex: 1;
   display: flex;
   justify-content: center;
-  /* max-width: 800px; */
-  /* width: 80%; */
 }
-
 .cardslot {
-  flex: 2;
-  /* border:1px solid red; */
-  max-width: 8rem;
+  flex: 1;
 }
-
 .biddingwindow {
-  background-color: white;
+  background-color: #fff;
   border: 2px solid #003764;
-  /* padding: 5%; */
   margin: 5% 30%;
   border-radius: 5%;
   text-align: left;
 }
-
 .windowheader {
   background-color: #003764;
   color: #fec24d;
@@ -67,78 +59,41 @@ code {
   font-weight: bolder;
   font-size: 20;
 }
-
 .bid {
   border-bottom: 1px solid #003764;
   padding: 2% 5%;
 }
-
 .makebid {
   margin: 5%;
   text-align: center;
 }
-
 .playerwindow {
   background-color: #003764;
-  margin-top: 2%;
-  padding-top: 1%;
-  padding-bottom: 1%;
-  border-top: 5px groove #fec24d;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
   text-align: center;
-}
 
+}
 .playeraction {
-  padding: 2%;
-}
+  padding: 0.25rem;
+  padding-bottom: 3rem;
 
-.playboard {
-  margin: 0px;
-  padding: 0px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 50vh;
 }
-
-.playboardrow {
-  flex: 1;
-  display: flex;
-  height: 15rem;
-  margin: 0.1rem 0rem;
-}
-
-.playboardbox {
-  flex: 1;
-  width: 33%;
-  align-self: center;
-}
-
-.playboardboxlog {
-  flex: 1;
-  width: 33%;
-  align-self: flex-end;
-}
-
 .player2 {
   text-align: right;
 }
-
 .player3 {
   background-color: transparent;
 }
-
 .player4 {
   text-align: left;
 }
-
 .player1 {
   background-color: transparent;
 }
-
 .playboardlog {
   background-color: transparent;
 }
-
 .playboardlogheader {
   background-color: #fec24d;
   text-align: center;
@@ -146,37 +101,49 @@ code {
   font-size: small;
   color: #003764;
   padding: 0.1rem;
-  /* border-radius: .5rem .5rem 0rem 0rem; */
 }
-
 .playboardlogentry {
-  /* background-color: whitesmoke; */
-  /* border: 1px solid #003764; */
   padding: 0.1rem 0.2rem;
   font-size: small;
   text-align: left;
-  color: whitesmoke;
+  color: #f5f5f5;
 }
-
 .playermessagebox {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-
 .playermessageboxheader {
   flex: 1;
   background-color: #003764;
   color: #fec24d;
-  /* font-size: small; */
-  font-weight: bold;
-  margin: 0% 15%;
+  font-weight: 700;
+  margin: 0 15%;
   text-align: center;
 }
-
 .playermessageboxtext {
   flex: 1;
-  background-color: whitesmoke;
-  /* font-size: small; */
-  margin: 0% 15%;
+  background-color: #f5f5f5;
+  margin: 0 15%;
+}
+.playerplayedcard {
+  flex: 1;
+  margin: 0 1.75rem;
+}
+.game {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.viewTableContainer {
+  flex: 1;
+  margin: 0.33rem 4rem;
+  text-align: center;
+  justify-self: center;
+}
+.playerWindowContainer {
+  flex: 1;
+}
+.bidInfoContainer {
+  flex: 1;
 }

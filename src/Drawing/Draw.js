@@ -26,9 +26,9 @@ const Draw = ({ deckUrl, drawer, trumpSuit, sendDraw }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Hand deckUrl={deckUrl} player={drawer} />
-      <div className="handwindow">
+    
+<form onSubmit={handleSubmit}>
+      <div className="discardhandwindow">
         <div className="discardHand">
           <div className="discardbox">
             <input

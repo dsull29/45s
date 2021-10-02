@@ -1,11 +1,14 @@
 .footer {
   display: flex;
-  padding: 0.2rem;
+  padding: 4rem 1rem;
   text-align: center;
-  background-color: whitesmoke;
+  background-color: slategrey;
   font-size: 0.75rem;
+  align-items: flex-end;
+  
 }
 
 .footeritem {
   flex: 1;
+  
 }

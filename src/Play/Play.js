@@ -8,6 +8,7 @@ import PlayLog from "./PlayLog";
 import Turn from "./Turn";
 import "./play.css";
 import BidInfo from "../Bidding/BidInfo";
+import ViewTable from "../ViewTable";
 
 const Play = ({
   deckUrl,
@@ -87,40 +88,31 @@ const Play = ({
     return playedCards[num];
   }
 
+  const players = ["You", "Mario", "Partner", "Luigi"];
+  function getActions(playedCards, order) {
+    let actions = [];
+    for (let i = 0; i < players.length; i++) {
+      actions[i] = getPlayerCard(players[i], order);
+    }
+    return actions;
+  }
+
   return (
-    <div>
-      <div className="playboard">
-        <div className="playboardrow">
-          <div className="playboardbox"></div>
-          <div className="playboardbox player3">
-            <PlayCard card={getPlayerCard("Partner", bookOrder)} />
-          </div>
-          <div className="playboardbox"></div>
-        </div>
-
-        <div className="playboardrow">
-          <div className="playboardbox player2">
-            <PlayCard card={getPlayerCard("Mario", bookOrder)} />
-          </div>
-          <div className="playboardbox"></div>
-          <div className="playboardbox player4">
-            <PlayCard card={getPlayerCard("Luigi", bookOrder)} />
-          </div>
-        </div>
-
-        <div className="playboardrow">
-          <div className="playboardboxlog">
-            <BidInfo bidData={bidData} />
-          </div>
-          <div className="playboardbox player1">
-            <PlayCard card={getPlayerCard("You", bookOrder)} />
-          </div>
-          <div className="playboardboxlog">
-            <PlayLog bookInfo={bookInfo} />
-          </div>
-        </div>
+    <div className="game">
+      <div className="viewTableContainer">
+        <ViewTable
+          stage="Playing"
+          players={players}
+          actions={getActions(playedCards, bookOrder)}
+          // bidData={bidData}
+        />
       </div>
 
+      <div className="bidInfoContainer">
+        <BidInfo bidData={bidData} />
+      </div>
+
+      <div className="playerWindowContainer"></div>
       <div className="playerwindow">
         <Hand deckUrl={deckUrl} player={player} />
         <div className="playeraction">

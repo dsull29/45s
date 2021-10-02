@@ -3,7 +3,8 @@ import BidInfo from "../Bidding/BidInfo";
 import { checkPlayerPosition } from "../Play/Play";
 import Draw from "./Draw";
 import DrawCpu from "./DrawCpu";
-import ViewDraw from "./ViewDraw";
+import ViewTable from "../ViewTable";
+import Hand from "../Hand";
 
 const Drawing = ({ deckUrl, roundOrder, bidData, sendDiscardData }) => {
   const [draw1, setDraw1] = useState("");
@@ -73,54 +74,37 @@ const Drawing = ({ deckUrl, roundOrder, bidData, sendDiscardData }) => {
     return draws[num];
   }
 
+  const players = ["You", "Mario", "Partner", "Luigi"];
+  function getActions(draws, roundOrder) {
+    let actions = [];
+    for (let i = 0; i < players.length; i++) {
+      actions[i] = getPlayerDraw(players[i], roundOrder);
+    }
+    return actions;
+  }
+
   return (
-    <div>
-      <div className="playboard">
-        <div className="playboardrow">
-          <div className="playboardbox"></div>
-
-          <div className="playboardbox">
-            <ViewDraw
-              draw={getPlayerDraw("Partner", roundOrder)}
-              drawer="Partner"
-            />
-          </div>
-          <div className="playboardbox"></div>
-        </div>
-
-        <div className="playboardrow">
-          <div className="playboardbox">
-            <ViewDraw
-              draw={getPlayerDraw("Mario", roundOrder)}
-              drawer="Mario"
-            />
-          </div>
-          <div className="playboardbox"></div>
-          <div className="playboardbox">
-            <ViewDraw
-              draw={getPlayerDraw("Luigi", roundOrder)}
-              drawer="Luigi"
-            />
-          </div>
-        </div>
-
-        <div className="playboardrow">
-          <div className="playboardboxlog">
-            <BidInfo bidData={bidData} />
-          </div>
-          <div className="playboardbox">
-            <ViewDraw draw={getPlayerDraw("You", roundOrder)} drawer="You" />
-          </div>
-          <div className="playboardbox"></div>
-        </div>
+    <div className="game">
+      <div className="viewTableContainer">
+        <ViewTable
+          stage="Drawing"
+          players={players}
+          actions={getActions(draws, roundOrder)}
+          bidData={bidData}
+        />
       </div>
-
-      <div className="playerwindow">
-        {turn > 0 && !draw1 && whoseRedraw(1, setDraw1)}
-        {turn > 1 && !draw2 && whoseRedraw(2, setDraw2)}
-        {turn > 2 && !draw3 && whoseRedraw(3, setDraw3)}
-        {turn > 3 && !draw4 && whoseRedraw(4, setDraw4)}
-        {turn === 4 && draw4 && <div>Hey!</div>}
+      <div className="bidInfoContainer">
+        <BidInfo bidData={bidData} />
+      </div>
+      <div className="playerWindowContainer">
+        <div className="playerwindow">
+        <Hand deckUrl={deckUrl} player={player} />
+          {turn > 0 && !draw1 && whoseRedraw(1, setDraw1)}
+          {turn > 1 && !draw2 && whoseRedraw(2, setDraw2)}
+          {turn > 2 && !draw3 && whoseRedraw(3, setDraw3)}
+          {turn > 3 && !draw4 && whoseRedraw(4, setDraw4)}
+          {turn === 4 && draw4 && <div>Hey!</div>}
+        </div>
       </div>
     </div>
   );
