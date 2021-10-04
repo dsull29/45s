@@ -7,6 +7,7 @@ test("bidder 1 passes", () => {
     let bid = { bidder: "Mario", playerBid: "Pass", suit: "Hearts" };
     let {highBid,highBidder} = checkBid(bid, bidData);
     expect(highBid).toBe(undefined);
+    expect(highBidder).toBe(undefined);
   });
   
   test("You takes passes Partner's 20", () => {

@@ -9,7 +9,7 @@ const MakeBid = ({ deckUrl, bidder, bidData, dealer, sendBid }) => {
   const url = deckUrl + "/pile/" + bidder + "/list/";
   const { data, error, isPending } = useFetch(url);
 
-  const isDealer = player === dealer;
+  const isDealer = bidder === dealer;
 
   let highBid = bidData.highBid;
   let humanBidder;

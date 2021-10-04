@@ -18,7 +18,9 @@ const Turn = ({
 
   if (data && !cardPlay) {
     cards = data.piles[player].cards;
-    var taco = playCard(position, cards, trumpSuit, leadSuit);
+    let taco = playCard(position, cards, trumpSuit, leadSuit);
+
+    console.log("turnCrash",data,cards,taco)
 
     fetch(deckUrl + "/pile/discard/add/?cards=" + taco.code)
       .then((res) => {

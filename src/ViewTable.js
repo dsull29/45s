@@ -4,7 +4,7 @@ import PlayCard from "./Play/PlayCard";
 import "./viewTable.css";
 
 const ViewTable = ({ stage, players, actions, bidData }) => {
-  console.log(stage, players, actions);
+  // console.log(stage, players, actions);
   return (
     <div className="table">
       <div className="tablerowtop">
