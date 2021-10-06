@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { evaluateHand } from "../cardValues";
-import Hand from "../Hand";
 import useFetch from "../useFetch";
 import { getBestSuit } from "./bidfuncs";
 import "../Play/play.css";
@@ -13,12 +12,9 @@ const SelectSuit = ({ deckUrl, bidData, sendTrumpSuit }) => {
 
   const player = "You";
   console.log("bid", bidder, bidData);
-  let humanBidder;
+
   if (data) {
-    if (bidder === player) {
-      humanBidder = true;
-    } else {
-      humanBidder = false;
+    if (bidder !== player) {
       let cards = data.piles[bidder].cards;
       let card;
       let cardCodes = [];
@@ -38,6 +34,8 @@ const SelectSuit = ({ deckUrl, bidData, sendTrumpSuit }) => {
 
   return (
     <div>
+      {error && <div>{error}</div>}
+      {isPending && <div>Thinking...</div>}
       {bidData.highBidder === "You" && (
         <div className="playeraction">
           <form onSubmit={handleSuitSubmit}>

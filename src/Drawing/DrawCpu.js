@@ -21,7 +21,7 @@ const DrawCpu = ({ deckUrl, drawer, trumpSuit, sendDraw  }) => {
       }
     }
         getNewCards(deckUrl, discardCodes, drawer, setDiscardCount, setDiscardPending);
-      }}, [data]);
+      }}, [deckUrl,drawer,trumpSuit,data]);
 
     if (data && discardCount && !discardPending)  {
         sendDraw(discardCount)

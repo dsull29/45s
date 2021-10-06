@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import BidInfo from "../Bidding/BidInfo";
 import { checkPlayerPosition } from "../Play/Play";
 import Draw from "./Draw";
@@ -15,33 +15,36 @@ const Drawing = ({ deckUrl, roundOrder, bidData, sendDiscardData }) => {
 
   const player = "You";
   switch (turn) {
-    case 1: {
+    case 1:
       if (draw1) {
         setTurn(2);
       }
       break;
-    }
-    case 2: {
+
+    case 2:
       if (draw2) {
         setTurn(3);
       }
       break;
-    }
-    case 3: {
+
+    case 3:
       if (draw3) {
         setTurn(4);
       }
       break;
-    }
-    case 4: {
+
+    case 4:
       if (draw4) {
         setTurn(5);
       }
       break;
-    }
-    case 5: {
+
+      case 5:
       sendDiscardData(true);
-    }
+      break;
+
+      default:
+      console.log("default hit");
   }
 
   let drawer = roundOrder[turn - 1];
@@ -98,7 +101,7 @@ const Drawing = ({ deckUrl, roundOrder, bidData, sendDiscardData }) => {
       </div>
       <div className="playerWindowContainer">
         <div className="playerwindow">
-        <Hand deckUrl={deckUrl} player={player} />
+          <Hand deckUrl={deckUrl} player={player} />
           {turn > 0 && !draw1 && whoseRedraw(1, setDraw1)}
           {turn > 1 && !draw2 && whoseRedraw(2, setDraw2)}
           {turn > 2 && !draw3 && whoseRedraw(3, setDraw3)}

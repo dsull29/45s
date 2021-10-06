@@ -16,7 +16,7 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
   const [log, setLog] = useState([]);
   const [roundOrder, setRoundOrder] = useState(null);
 
-  const order = ["You", "Mario", "Partner", "Luigi"];
+  // const order = ["You", "Mario", "Partner", "Luigi"];
 
   // TODO look into a way to reset states without having todo this...
   if (newRound && stage === "Over") {

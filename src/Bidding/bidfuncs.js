@@ -1,6 +1,5 @@
 export const checkBid = (bid, bidData) => {
-  // console.log("incheckBid",bid,bidData)
-  let highBid, highBidder, suit;
+  let highBid, highBidder;
   if (bid.playerBid === "Pass") {
     // return {null, null};
   } else if (bid.playerBid === "Take") {

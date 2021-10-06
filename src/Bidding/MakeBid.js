@@ -45,6 +45,8 @@ const MakeBid = ({ deckUrl, bidder, bidData, dealer, sendBid }) => {
 
   return (
     <div className="playeraction">
+      {error && <div>{error}</div>}
+      {isPending && <div>Thinking...</div>}
       {humanBidder && (
         <div>
           <form onSubmit={handleSubmit}>

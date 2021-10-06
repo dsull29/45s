@@ -38,7 +38,7 @@ const Bidding = ({ deckUrl, bidOrder, sendBidData }) => {
   const dealer = bidOrder[3];
 
   switch (turn) {
-    case 1: {
+    case 1: 
       if (bid1) {
         let { highBid, highBidder } = checkBid(bid1, bidData);
         if (highBid) {
@@ -47,8 +47,8 @@ const Bidding = ({ deckUrl, bidOrder, sendBidData }) => {
         setTurn(2);
       }
       break;
-    }
-    case 2: {
+    
+    case 2: 
       if (bid2) {
         let { highBid, highBidder } = checkBid(bid2, bidData);
         if (highBid) {
@@ -57,8 +57,8 @@ const Bidding = ({ deckUrl, bidOrder, sendBidData }) => {
         setTurn(3);
       }
       break;
-    }
-    case 3: {
+    
+    case 3: 
       if (bid3) {
         let { highBid, highBidder } = checkBid(bid3, bidData);
         if (highBid) {
@@ -67,8 +67,8 @@ const Bidding = ({ deckUrl, bidOrder, sendBidData }) => {
         setTurn(4);
       }
       break;
-    }
-    case 4: {
+    
+    case 4: 
       if (bid4) {
         let { highBid, highBidder } = checkBid(bid4, bidData);
         if (highBid) {
@@ -79,23 +79,19 @@ const Bidding = ({ deckUrl, bidOrder, sendBidData }) => {
         setTurn(5);
       }
       break;
-    }
-    case 5: {
+        case 5: 
       if (trumpSuit) {
         let highBid = bidData.highBid;
         let highBidder = bidData.highBidder;
         setBidData({ highBid, highBidder, trumpSuit });
-        setTurn(6);
-      }
-      break;
-    }
-
-    case 6: {
+        setTurn(6)};
+       break;
+    
+    case 6: 
       sendBidData(bidData);
-    }
-    default: {
+      break;
+    default: 
       console.log("bid turn default hit")
-    }
   }
 
   const bids = [bid1, bid2, bid3, bid4];

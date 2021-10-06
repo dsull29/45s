@@ -28,6 +28,8 @@ const PlayerTurn = ({
 
   return (
     <div>
+      {error && <div>{error}</div>}
+      {isPending && <div>Thinking...</div>}
       {data && (
         <form onSubmit={handleSubmit}>
           <select
