@@ -135,19 +135,22 @@ export function evaluateHand(cards) {
   for (let i = 0; i < 5; i++) {
     var card = cards[i];
     switch (card.charAt(1)) {
-    case "H": {
-      heartHandVal += getTrumpValue(card,"H")};
-      break;
-    case "D": {
-      diamondHandVal += getTrumpValue(card,"D")};
-      break;
-    case "S": {
-      spadeHandVal += getTrumpValue(card,"S")};
-      break;
-    case "C": {
-      clubHandVal += getTrumpValue(card,"C")};
-      break;
-  }}
+      case "H":
+        heartHandVal += getTrumpValue(card, "H");
+        break;
+      case "D":
+        diamondHandVal += getTrumpValue(card, "D");
+        break;
+      case "S":
+        spadeHandVal += getTrumpValue(card, "S");
+        break;
+      case "C":
+        clubHandVal += getTrumpValue(card, "C");
+        break;
+      default:
+        console.log("default returned");
+    }
+  }
 
   return [heartHandVal, diamondHandVal, spadeHandVal, clubHandVal];
 }
@@ -157,17 +160,17 @@ export function getCardValue(card, trump, lead) {
   let trumpSuit = trump.charAt(0);
   let leadSuit = lead;
   let cardValue = "";
-  if (cardSuit === trumpSuit) {
-    cardValue = getTrumpValue(card,trumpSuit);
+  if (cardSuit === trumpSuit || card === "AH") {
+    cardValue = getTrumpValue(card, trumpSuit);
   } else if (cardSuit === leadSuit) {
-    cardValue = getLeadValue(card,lead);
+    cardValue = getLeadValue(card, lead);
   } else {
-    cardValue = getOffSuitValue(card,cardSuit);
+    cardValue = getOffSuitValue(card, cardSuit);
   }
-  return cardValue
-};
+  return cardValue;
+}
 
-  function getTrumpValue(card,trump) {
+function getTrumpValue(card, trump) {
   switch (trump) {
     case "H":
       return trumpValues[heartTrumpOrder.indexOf(card)];
@@ -176,12 +179,13 @@ export function getCardValue(card, trump, lead) {
     case "S":
       return trumpValues[spadesTrumpOrder.indexOf(card)];
     case "C":
-      return trumpValues[clubsTrumpOrder.indexOf(card)]
+      return trumpValues[clubsTrumpOrder.indexOf(card)];
     default:
       return "";
-  }};
+  }
+}
 
-  function getLeadValue(card,lead) {
+function getLeadValue(card, lead) {
   switch (lead) {
     case "H":
       return leadValues[heartOffSuitOrder.indexOf(card)];
@@ -190,22 +194,22 @@ export function getCardValue(card, trump, lead) {
     case "S":
       return leadValues[spadesOffSuitOrder.indexOf(card)];
     case "C":
-      return leadValues[clubsOffSuitOrder.indexOf(card)]
+      return leadValues[clubsOffSuitOrder.indexOf(card)];
     default:
       return "";
-  }}
-  ;
-
-  function getOffSuitValue(card,cardSuit) {
-    switch (cardSuit) {
-      case "H":
-        return offSuitValues[heartOffSuitOrder.indexOf(card)];
-      case "D":
-        return offSuitValues[diamondOffSuitOrder.indexOf(card)];
-      case "S":
-        return offSuitValues[spadesOffSuitOrder.indexOf(card)];
-      case "C":
-        return offSuitValues[clubsOffSuitOrder.indexOf(card)]
-      default:
-        return "";
-    }};
+  }
+}
+function getOffSuitValue(card, cardSuit) {
+  switch (cardSuit) {
+    case "H":
+      return offSuitValues[heartOffSuitOrder.indexOf(card)];
+    case "D":
+      return offSuitValues[diamondOffSuitOrder.indexOf(card)];
+    case "S":
+      return offSuitValues[spadesOffSuitOrder.indexOf(card)];
+    case "C":
+      return offSuitValues[clubsOffSuitOrder.indexOf(card)];
+    default:
+      return "";
+  }
+}
