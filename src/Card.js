@@ -1,7 +1,9 @@
 const Card = ({ card }) => {
   return (
     <div className="cardslot">
-      {card && <img src={card.image} alt="Card" width="100%" />}
+      <div>
+      {card && <img src={card.image} alt="Card" height="104px" />}
+      </div>
     </div>
   );
 };

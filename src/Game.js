@@ -2,6 +2,8 @@ import { useState } from "react";
 import Score from "./Score/Score";
 import Round from "./Round";
 import useFetch from "./useFetch";
+import "./game.css";
+// import Table from "./Table/Table";
 
 const Game = () => {
   const { data, isPending, error } = useFetch(
@@ -14,6 +16,8 @@ const Game = () => {
   const [scoreLog, setScoreLog] = useState([]);
   const [gameOver, setGameOver] = useState("");
 
+
+  
   let deckUrl = null;
   if (data) {
     deckUrl = "https://deckofcardsapi.com/api/deck/" + data.deck_id;
@@ -44,13 +48,14 @@ const Game = () => {
       {error && <div className="gamewindow loading">{error}</div>}
       {deckUrl && !gameOver && (
         <div className="game">
-          <Score round={round} gameScore={gameScore} />
-          <Round
+          <div><Score round={round} gameScore={gameScore} /></div>
+          <div><Round
             deckUrl={deckUrl}
             round={round}
             sendRoundScore={setRoundScore}
             newRound={true}
           />
+        </div>
         </div>
       )}
       {gameOver && (

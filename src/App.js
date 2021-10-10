@@ -8,7 +8,7 @@ function App() {
   const [inGame, setInGame] = useState(false);
 
   return (
-    <div className="App">
+    <div>
       <Header />
       {inGame === false && (
         <div className="gamewindow">

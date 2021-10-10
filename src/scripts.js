@@ -1,40 +1,9 @@
-import { getCardValue } from "./cardValues";
-
 export function getDealer(dealers) {
   let order = dealers;
   let dealer = order.shift();
   // TODO fix the order here
   order.push(dealer);
   return { dealer, order };
-}
-
-export function getWorstCard(cards, trump, lead) {
-  var worstCard = null;
-  var worstCardVal = 0 - 50;
-
-  for (let i = 0; i < cards.length; i++) {
-    var curCardVal = getCardValue(cards[i].code, trump, lead);
-    if (curCardVal > worstCardVal) {
-      worstCardVal = curCardVal;
-      worstCard = i;
-    }
-  }
-  return cards[worstCard];
-}
-
-export function getBestCard(cards, trump, lead) {
-  var bestCard = null;
-  var bestCardVal = 50;
-
-  for (let i = 0; i < cards.length; i++) {
-    var curCardVal = getCardValue(cards[i].code, trump, lead);
-    if (curCardVal < bestCardVal) {
-      bestCardVal = curCardVal;
-      bestCard = i;
-    }
-  }
-
-  return cards[bestCard];
 }
 
 export function getPlayerHand(url, player) {

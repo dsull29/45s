@@ -1,0 +1,20 @@
+.gamewindow {
+    text-align: center;
+    background-color: #006400;
+    height: 83vh;
+    /* border: 1px pink solid; */
+  }
+
+.game {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* border: 1px solid black; */
+  }  
+
+  .viewTableContainer {
+    margin: 0.33rem 4rem;
+    text-align: center;
+    justify-self: center;
+    /* min-width: 450px; */
+  }

@@ -82,6 +82,7 @@ const heartOffSuitOrder = [
   "QH",
   "KH",
 ];
+
 const diamondOffSuitOrder = [
   "AD",
   "2D",
@@ -97,6 +98,7 @@ const diamondOffSuitOrder = [
   "QD",
   "KD",
 ];
+
 const spadesOffSuitOrder = [
   "0S",
   "9S",
@@ -112,6 +114,7 @@ const spadesOffSuitOrder = [
   "QS",
   "KS",
 ];
+
 const clubsOffSuitOrder = [
   "0C",
   "9C",
@@ -128,12 +131,16 @@ const clubsOffSuitOrder = [
   "KC",
 ];
 
+/** Evalutes the given hand of cards in each suit
+ * @param  {Array} cards
+ * @returns {Array} calculated hand values [Hearts,Diamonds,Spade,Club]
+ */
 export function evaluateHand(cards) {
+  let card;
   let heartHandVal, diamondHandVal, spadeHandVal, clubHandVal;
   heartHandVal = diamondHandVal = spadeHandVal = clubHandVal = 0;
 
-  for (let i = 0; i < 5; i++) {
-    var card = cards[i];
+  for (card of cards) {
     switch (card.charAt(1)) {
       case "H":
         heartHandVal += getTrumpValue(card, "H");
@@ -151,10 +158,13 @@ export function evaluateHand(cards) {
         console.log("default returned");
     }
   }
-
   return [heartHandVal, diamondHandVal, spadeHandVal, clubHandVal];
 }
-
+/** Gets the card value relative to trump and lead suits
+ * @param  {String} card 2 char card identifier (ie AH = Ace of Hearts)
+ * @param  {String} trump trump suit
+ * @param  {String} lead lead suit
+ */
 export function getCardValue(card, trump, lead) {
   let cardSuit = card.charAt(1);
   let trumpSuit = trump.charAt(0);
@@ -170,6 +180,10 @@ export function getCardValue(card, trump, lead) {
   return cardValue;
 }
 
+/** Gets the value of the card when it's the trump suit
+ * @param  {String} card 2 char card identifer ie AH = Ace of Hearts)
+ * @param  {String} trump the trump suit
+ */
 function getTrumpValue(card, trump) {
   switch (trump) {
     case "H":
@@ -185,6 +199,10 @@ function getTrumpValue(card, trump) {
   }
 }
 
+/** Gets the value of the card when it's the lead suit
+ * @param  {String} card 2 char card identifer ie AH = Ace of Hearts)
+ * @param  {String} lead the lead suit
+ */
 function getLeadValue(card, lead) {
   switch (lead) {
     case "H":
@@ -199,6 +217,11 @@ function getLeadValue(card, lead) {
       return "";
   }
 }
+
+/** Gets the value of the card when it's neither trump or lead suit
+ * @param  {String} card 2 char card identifier ie (AH = Ace of Hearts)
+ * @param  {String} cardSuit the card's suit
+ */
 function getOffSuitValue(card, cardSuit) {
   switch (cardSuit) {
     case "H":

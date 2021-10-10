@@ -95,24 +95,6 @@ export function getBookOrder(mung, roundOrder) {
   return order;
 }
 
-// export async function dealHands(deckUrl,round,setIsPending,setHands,setRoundOrder) {
-//   const order = getRoundOrder(round);
-//   await fetch(deckUrl + "/shuffle/");
-//   const drawresponse = await fetch(deckUrl + "/draw/?count=20");
-//   const drawData = await drawresponse.json();
-//   let hands = hash(drawData.cards);
-//   console.log("handCheck",hands,drawData)
-//   await fetch(deckUrl + "/pile/" + order[0] + "/add/?cards=" + hands[0].toString())
-//   await fetch(deckUrl + "/pile/" + order[1] + "/add/?cards=" + hands[1].toString())
-//   await fetch(deckUrl + "/pile/" + order[2] + "/add/?cards=" + hands[2].toString())
-//   const done = await fetch(deckUrl + "/pile/" + order[3] + "/add/?cards=" + hands[3].toString())
-//   if (done) {
-//     setRoundOrder(order)
-//     setHands(hands)
-//     setIsPending(false)
-//   }
-// }
-
 /** Handles discarding, drawing new cards, and assigning that number of cards to the player
  * @param  {String} deckUrl URL of the deck being used for this round
  * @param  {Array} discardCodes Card codes to discard

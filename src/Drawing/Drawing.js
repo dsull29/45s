@@ -6,7 +6,7 @@ import DrawCpu from "./DrawCpu";
 import ViewTable from "../ViewTable";
 import Hand from "../Hand";
 
-const Drawing = ({ deckUrl, roundOrder, bidData, sendDiscardData }) => {
+const Drawing = ({ deckUrl, roundOrder, bidData, sendDiscardData, sendDiscardPending }) => {
   const [draw1, setDraw1] = useState("");
   const [draw2, setDraw2] = useState("");
   const [draw3, setDraw3] = useState("");

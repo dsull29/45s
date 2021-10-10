@@ -5,10 +5,12 @@ import { playCardNow } from "../scripts";
 const PlayerTurn = ({
   deckUrl,
   player,
+  bookOrder,
   position,
   leadSuit,
   sendPlayCard,
-  trumpSuit,
+  bidData,
+  playedCards
 }) => {
   const [playerCard, setPlayerCard] = useState(0);
 

@@ -1,13 +1,19 @@
 const PlayCard = ({ card, player }) => {
+  let cardName
+  if (card) {
+    cardName = card.value + " of " + card.suit;
+  }
   return (
-    <div className="playermessagebox">
-        {card && (
-          <div>
-            <div className="playermessageboxheader">{player}</div>
-            <div className="playerplayedcard">
-            <img src={card.image} alt="Card" width="93px" /></div>
-            </div>)}
-      </div>
+    <div>
+      <div className="playermessagebox">
+      <div className="playermessageboxheader">{player}</div>
+      {card && (
+        <div className="playerplayedcard">
+          <img src={card.images.png} alt={cardName} width="30%" />
+        </div>
+      )}
+    </div>
+    </div>
   );
 };
 

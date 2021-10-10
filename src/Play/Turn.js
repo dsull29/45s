@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { getBestCard, getWorstCard } from "../scripts";
 import useFetch from "../useFetch";
+import { playCard } from "./playing";
 
 const Turn = ({
   deckUrl,
   player,
+  bookOrder,
   position,
   leadSuit,
   sendPlayCard,
-  trumpSuit,
+  bidData,
+  playedCards
 }) => {
   const url = deckUrl + "/pile/" + player + "/list/";
   const { data, error, isPending } = useFetch(url);
@@ -18,7 +20,7 @@ const Turn = ({
 
   if (data && !cardPlay) {
     cards = data.piles[player].cards;
-    let taco = playCard(position, cards, trumpSuit, leadSuit);
+    let taco = playCard(position, cards, bidData, leadSuit, playedCards, bookOrder, player);
 
     fetch(deckUrl + "/pile/discard/add/?cards=" + taco.code)
       .then((res) => {
@@ -47,23 +49,4 @@ const Turn = ({
 
 export default Turn;
 
-function playCard(position, cards, trumpSuit, leadSuit) {
-  var card;
-  switch (position) {
-    case 1:
-      card = getWorstCard(cards, trumpSuit);
-      break;
-    case 2:
-      card = getWorstCard(cards, trumpSuit, leadSuit);
-      break;
-    case 3:
-      card = getBestCard(cards, trumpSuit, leadSuit);
-      break;
-    case 4:
-      card = getBestCard(cards, trumpSuit, leadSuit);
-      break;
-    default:
-      console.log("defaultHit");
-  }
-  return card;
-}
+

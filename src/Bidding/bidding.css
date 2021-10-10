@@ -2,11 +2,12 @@
   display: flex;
   background-color: #fec24d;
   text-align: center;
+  font-size: smaller
   
 }
 
 .bidInfoBox {
   flex: 1;
-  border: 1px solid pink;
+  /* border: 1px solid pink; */
 }
 

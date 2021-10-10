@@ -9,6 +9,7 @@ const Draw = ({ deckUrl, drawer, trumpSuit, sendDraw }) => {
   const [discard2, setDiscard2] = useState(false);
   const [discard3, setDiscard3] = useState(false);
   const [discard4, setDiscard4] = useState(false);
+  const [discardPending, setDiscardPending] = useState(true);
 
   const url = deckUrl + "/pile/" + drawer + "/list/";
   const { data, error, isPending } = useFetch(url);
@@ -20,7 +21,7 @@ const Draw = ({ deckUrl, drawer, trumpSuit, sendDraw }) => {
     for (let i = 0; i < 5; i++) {
       discards[i] && discardCodes.push(data.piles[drawer].cards[i].code);
     }
-    getNewCards(deckUrl, discardCodes, drawer, sendDraw);
+    getNewCards(deckUrl, discardCodes, drawer, sendDraw, setDiscardPending);
   };
 
   return (
@@ -72,9 +73,10 @@ const Draw = ({ deckUrl, drawer, trumpSuit, sendDraw }) => {
                 ></input>
               </div>
             </div>
-            <div className="playeraction"></div>
+            <div className="playeraction">
+              <button>Discard Selected</button>
+            </div>
           </div>
-          <button>Discard Selected</button>
         </form>
       )}
     </div>

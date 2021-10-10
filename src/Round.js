@@ -5,6 +5,7 @@ import Bidding from "./Bidding/Bidding";
 import Play from "./Play/Play";
 import Drawing from "./Drawing/Drawing";
 import PlayWinner from "./Play/PlayWinner";
+import ViewTable from "./ViewTable";
 
 const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
   const [isPending, setIsPending] = useState(true);

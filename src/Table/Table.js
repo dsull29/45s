@@ -1,9 +1,9 @@
-import ViewBid from "./Bidding/ViewBid";
-import ViewDraw from "./Drawing/ViewDraw";
-import PlayCard from "./Play/PlayCard";
-import "./viewTable.css";
+import ViewBid from "../Bidding/ViewBid";
+import ViewDraw from "../Drawing/ViewDraw";
+import PlayCard from "../Play/PlayCard";
+import "./table.css";
 
-const ViewTable = ({ stage, players, actions, bidData }) => {
+const Table = ({ stage, players, actions, bidData }) => {
   // console.log(stage, players, actions);
   return (
     <div className="table">
@@ -85,4 +85,4 @@ const ViewTable = ({ stage, players, actions, bidData }) => {
   );
 };
 
-export default ViewTable;
+export default Table;

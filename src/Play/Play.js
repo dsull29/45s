@@ -61,11 +61,13 @@ const Play = ({
       return (
         <PlayerTurn
           deckUrl={deckUrl}
-          player={player}
+          player={bookOrder[val - 1]}
+          bookOrder={bookOrder}
           position={val}
           sendPlayCard={sendPlayCard}
-          trumpSuit={bidData.trumpSuit}
+          bidData={bidData}
           leadSuit={leadSuit}
+          playedCards={playedCards}
         />
       );
     } else {
@@ -73,10 +75,12 @@ const Play = ({
         <Turn
           deckUrl={deckUrl}
           player={bookOrder[val - 1]}
+          bookOrder={bookOrder}
           position={val}
           sendPlayCard={sendPlayCard}
-          trumpSuit={bidData.trumpSuit}
+          bidData={bidData}
           leadSuit={leadSuit}
+          playedCards={playedCards}
         />
       );
     }
@@ -97,7 +101,7 @@ const Play = ({
   }
 
   return (
-    <div className="game">
+    <div>
       <div className="viewTableContainer">
         <ViewTable
           stage="Playing"
@@ -111,14 +115,15 @@ const Play = ({
         <BidInfo bidData={bidData} />
       </div>
 
-      <div className="playerWindowContainer"></div>
-      <div className="playerwindow">
-        <Hand deckUrl={deckUrl} player={player} />
-        <div className="playeraction">
-          {turn > 0 && !playCard1 && whoseTurn(1, setPlayCard1)}
-          {turn > 1 && !playCard2 && whoseTurn(2, setPlayCard2)}
-          {turn > 2 && !playCard3 && whoseTurn(3, setPlayCard3)}
-          {turn > 3 && !playCard4 && whoseTurn(4, setPlayCard4)}
+      <div className="playerWindowContainer">
+        <div className="playerwindow">
+          <Hand deckUrl={deckUrl} player={player} />
+          <div className="playeraction">
+            {turn > 0 && !playCard1 && whoseTurn(1, setPlayCard1)}
+            {turn > 1 && !playCard2 && whoseTurn(2, setPlayCard2)}
+            {turn > 2 && !playCard3 && whoseTurn(3, setPlayCard3)}
+            {turn > 3 && !playCard4 && whoseTurn(4, setPlayCard4)}
+          </div>
         </div>
       </div>
     </div>
