@@ -9,7 +9,7 @@ const ViewTable = ({ stage, players, actions, bidData }) => {
     <div className="table">
       <div className="tablerowtop">
         <div className="tableplayerbox player3">
-          <div>
+          {/* <div> */}
             <div className="playerslot">
               {stage === "Bidding" && (
                 <ViewBid bid={actions[2]} bidder={players[2]} />
@@ -22,7 +22,7 @@ const ViewTable = ({ stage, players, actions, bidData }) => {
                 <PlayCard card={actions[2]} player={players[2]} />
               )}
             </div>
-          </div>
+          {/* </div> */}
         </div>
       </div>
 

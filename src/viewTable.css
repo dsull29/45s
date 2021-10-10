@@ -40,13 +40,12 @@
     justify-content: center;
     display: flex;
     width: 8rem;
-    height: 9rem;
+    height: 15vh;
 }
 
 .playerslot {
     flex: 1;
     width: 12rem;
-    height: 150px;
     text-align: center;
     /* border: 1px solid white; */
 }

@@ -128,7 +128,7 @@ const Round = ({ deckUrl, round, sendRoundScore, newRound }) => {
   }
 
   return (
-    <div className="content">
+    <div>
       {stage === "Deal" && isPending && (
         <div className="gamewindow loading">Dealing....</div>
       )}

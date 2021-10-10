@@ -112,7 +112,7 @@ const Bidding = ({ deckUrl, bidOrder, sendBidData }) => {
   }
 
   return (
-    <div className="game">
+    <div>
       <div className="viewTableContainer">
         <ViewTable
           stage="Bidding"

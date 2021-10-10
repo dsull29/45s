@@ -16,8 +16,6 @@ const Game = () => {
   const [scoreLog, setScoreLog] = useState([]);
   const [gameOver, setGameOver] = useState("");
 
-
-  
   let deckUrl = null;
   if (data) {
     deckUrl = "https://deckofcardsapi.com/api/deck/" + data.deck_id;
@@ -47,15 +45,14 @@ const Game = () => {
       {isPending && <div className="gamewindow loading">Setting up...</div>}
       {error && <div className="gamewindow loading">{error}</div>}
       {deckUrl && !gameOver && (
-        <div className="game">
-          <div><Score round={round} gameScore={gameScore} /></div>
-          <div><Round
-            deckUrl={deckUrl}
-            round={round}
-            sendRoundScore={setRoundScore}
-            newRound={true}
-          />
-        </div>
+        <div>
+            <Score round={round} gameScore={gameScore} />
+            <Round
+              deckUrl={deckUrl}
+              round={round}
+              sendRoundScore={setRoundScore}
+              newRound={true}
+            />
         </div>
       )}
       {gameOver && (
