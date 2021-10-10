@@ -26,7 +26,7 @@ const MakeBid = ({ deckUrl, bidder, bidData, dealer, sendBid }) => {
         cardCodes.push(card.code);
       }
       let handValues = evaluateHand(cardCodes);
-      let playerBid = getBid(handValues, bidData,isDealer);
+      let playerBid = getBid(handValues, bidData, isDealer);
       let bidYooo = { bidder, playerBid };
       sendBid(bidYooo);
     }
@@ -44,32 +44,46 @@ const MakeBid = ({ deckUrl, bidder, bidData, dealer, sendBid }) => {
   }
 
   return (
-    <div className="playeraction">
+    <div>
       {error && <div>{error}</div>}
       {isPending && <div>Thinking...</div>}
       {humanBidder && (
-        <div>
-          <form onSubmit={handleSubmit}>
-            <select
-              value={playerBid}
-              onChange={(e) => setPlayerBid(e.target.value)}
-            >
-              {isDealer && highBid && <option value="Take">Take</option>}
-              {isDealer && highBid && (
-                <option value="Pass">Let Bidder Have It</option>
-              )}
-              {!isDealer && <option value="Pass">Pass</option>}
-              {checkBidOptions("15", highBid) && <option value="15">15</option>}
-              {checkBidOptions("20", highBid) && <option value="20">20</option>}
-              {checkBidOptions("25", highBid) && <option value="25">25</option>}
-              {checkBidOptions("30", highBid) && <option value="30">30</option>}
-              {checkBidOptions("30No", highBid) && (
-                <option value="30No">30 No Draw</option>
-              )}
-            </select>
-            <button>Place Bid</button>
-          </form>
-        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="playeraction">
+            <div className="playeractionselect">
+              Place Bid:&nbsp;&nbsp;
+              <select
+                
+                value={playerBid}
+                onChange={(e) => setPlayerBid(e.target.value)}
+              >
+                {isDealer && highBid && <option value="Take">Take</option>}
+                {isDealer && highBid && (
+                  <option value="Pass">Let Bidder Have It</option>
+                )}
+                {!isDealer && <option value="Pass">Pass</option>}
+                {checkBidOptions("15", highBid) && (
+                  <option value="15">15</option>
+                )}
+                {checkBidOptions("20", highBid) && (
+                  <option value="20">20</option>
+                )}
+                {checkBidOptions("25", highBid) && (
+                  <option value="25">25</option>
+                )}
+                {checkBidOptions("30", highBid) && (
+                  <option value="30">30</option>
+                )}
+                {checkBidOptions("30No", highBid) && (
+                  <option value="30No">30 No Draw</option>
+                )}
+              </select>
+            </div>
+            <div className="playeractionbutton">
+              <button>Place Bid</button>
+            </div>
+          </div>
+        </form>
       )}
     </div>
   );

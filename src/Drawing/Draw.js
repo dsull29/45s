@@ -31,6 +31,7 @@ const Draw = ({ deckUrl, drawer, trumpSuit, sendDraw }) => {
       {data && (
         <form onSubmit={handleSubmit}>
           <div className="discardhandwindow">
+            Select cards to discard:
             <div className="discardHand">
               <div className="discardbox">
                 <input

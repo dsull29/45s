@@ -13,7 +13,7 @@ const PlayLog = ({ bookInfo }) => {
       );
     }
 
-    return <div>{x}</div>;
+    return <div>{x}</div>
   }
 
   return (

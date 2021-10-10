@@ -37,20 +37,25 @@ const SelectSuit = ({ deckUrl, bidData, sendTrumpSuit }) => {
       {error && <div>{error}</div>}
       {isPending && <div>Thinking...</div>}
       {bidData.highBidder === "You" && (
-        <div className="playeraction">
-          <form onSubmit={handleSuitSubmit}>
-            <select
-              value={trumpSuit}
-              onChange={(e) => setTrumpSuit(e.target.value)}
-            >
-              <option value="Hearts">Hearts</option>
-              <option value="Diamonds">Diamonds</option>
-              <option value="Spades">Spades</option>
-              <option value="Clubs">Clubs</option>
-            </select>
-            <button>Select Suit</button>
-          </form>
-        </div>
+        <form onSubmit={handleSuitSubmit}>
+          Select suit:&nbsp;&nbsp;
+          <div className="playeraction">
+            <div className="playeractionselect">
+              <select
+                value={trumpSuit}
+                onChange={(e) => setTrumpSuit(e.target.value)}
+              >
+                <option value="Hearts">Hearts</option>
+                <option value="Diamonds">Diamonds</option>
+                <option value="Spades">Spades</option>
+                <option value="Clubs">Clubs</option>
+              </select>
+            </div>
+            <div className="playeractionbutton">
+              <button>Select Suit</button>
+            </div>
+          </div>
+        </form>
       )}
     </div>
   );

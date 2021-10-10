@@ -118,7 +118,6 @@ const Play = ({
       <div className="playerWindowContainer">
         <div className="playerwindow">
           <Hand deckUrl={deckUrl} player={player} />
-          <div className="playeraction">
             {turn > 0 && !playCard1 && whoseTurn(1, setPlayCard1)}
             {turn > 1 && !playCard2 && whoseTurn(2, setPlayCard2)}
             {turn > 2 && !playCard3 && whoseTurn(3, setPlayCard3)}
@@ -126,7 +125,6 @@ const Play = ({
           </div>
         </div>
       </div>
-    </div>
   );
 };
 
